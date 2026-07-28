@@ -34,6 +34,7 @@ final class AppViewModel: ObservableObject {
     private var timerTask: Task<Void, Never>?
     private var currentMissionAwarded = false
     private let persistenceEnabled: Bool
+    private var bugBookReturnRoute: Route = .welcome
 
     init(persistenceEnabled: Bool = true, stickerCount: Int? = nil) {
         self.persistenceEnabled = persistenceEnabled
@@ -52,7 +53,11 @@ final class AppViewModel: ObservableObject {
     deinit { timerTask?.cancel() }
 
     func begin() { route = .location }
-    func showBugBook() { route = .bugBook }
+    func showBugBook() {
+        guard route != .bugBook else { return }
+        bugBookReturnRoute = route
+        route = .bugBook
+    }
 
     func choose(_ newLocation: AdventureLocation) {
         location = newLocation
@@ -110,7 +115,7 @@ final class AppViewModel: ObservableObject {
     func goBack() {
         switch route {
         case .bugBook:
-            route = .welcome
+            route = bugBookReturnRoute
         case .age:
             route = .location
         case .mission:

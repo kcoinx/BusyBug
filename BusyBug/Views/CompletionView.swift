@@ -14,13 +14,19 @@ struct CompletionView: View {
                 VStack(spacing: BugLayout.cardSpacing) {
                     HStack {
                         Spacer()
-                        Label("Bug Book", systemImage: "book.closed.fill")
-                            .font(.system(.subheadline, design: .rounded, weight: .bold))
-                            .foregroundStyle(BugColor.purple)
-                            .padding(.horizontal, 12)
-                            .frame(minHeight: 44)
-                            .background(BugColor.surface, in: Capsule())
-                            .overlay(Capsule().stroke(.white.opacity(0.8), lineWidth: 1))
+                        Button {
+                            model.showBugBook()
+                        } label: {
+                            Label("Bug Book", systemImage: "book.closed.fill")
+                                .font(.system(.subheadline, design: .rounded, weight: .bold))
+                                .foregroundStyle(BugColor.purple)
+                                .padding(.horizontal, 12)
+                                .frame(minHeight: 44)
+                                .background(BugColor.surface, in: Capsule())
+                                .overlay(Capsule().stroke(.white.opacity(0.8), lineWidth: 1))
+                        }
+                        .buttonStyle(BugPressButtonStyle())
+                        .accessibilityHint("Opens your sticker collection")
                     }
 
                     LadybugView(state: .celebrating, size: 148)
