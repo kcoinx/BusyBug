@@ -5,7 +5,7 @@ struct RootView: View {
 
     var body: some View {
         ZStack {
-            BugColor.cream.ignoresSafeArea()
+            PlayfulBackground()
             Group {
                 switch model.route {
                 case .welcome: WelcomeView(model: model)
@@ -23,6 +23,7 @@ struct RootView: View {
         .tint(BugColor.orange)
         .foregroundStyle(BugColor.ink)
         .animation(.snappy(duration: 0.35), value: model.route)
+        .sensoryFeedback(.success, trigger: model.stickers)
     }
 }
 

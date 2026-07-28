@@ -12,15 +12,20 @@ final class AppViewModel: ObservableObject {
     @Published var ageGroup: AgeGroup?
     @Published var currentMission: Mission?
     @Published var selectedChoice: String?
-    @Published var stickers = 0
-    @Published var timerEnabled = false
+    @Published var stickers: Int {
+        didSet { UserDefaults.standard.set(stickers, forKey: "bugStickerCount") }
+    }
+    @Published var timerIsRunning = false
+    @Published var timerHasStarted = false
     @Published var secondsRemaining = 15 * 60
 
     private(set) var missions: [Mission] = []
     private var recentMissionIDs: [String] = []
     private var timerTask: Task<Void, Never>?
+    private var currentMissionAwarded = false
 
     init() {
+        stickers = UserDefaults.standard.integer(forKey: "bugStickerCount")
         loadMissions()
     }
 
@@ -35,6 +40,7 @@ final class AppViewModel: ObservableObject {
 
     func choose(_ newAgeGroup: AgeGroup) {
         ageGroup = newAgeGroup
+        resetTimerState()
         showNewMission()
         route = .mission
     }
@@ -49,6 +55,7 @@ final class AppViewModel: ObservableObject {
         }
         currentMission = available.randomElement()
         selectedChoice = nil
+        currentMissionAwarded = false
         if let id = currentMission?.id {
             recentMissionIDs.append(id)
             recentMissionIDs = Array(recentMissionIDs.suffix(max(1, matching.count - 1)))
@@ -56,6 +63,8 @@ final class AppViewModel: ObservableObject {
     }
 
     func completeMission() {
+        guard !currentMissionAwarded else { return }
+        currentMissionAwarded = true
         stickers += 1
         stopTimer()
         route = .completion
@@ -69,6 +78,7 @@ final class AppViewModel: ObservableObject {
 
     func done() {
         stopTimer()
+        resetTimerState()
         route = .location
         location = nil
         ageGroup = nil
@@ -80,6 +90,7 @@ final class AppViewModel: ObservableObject {
             route = .location
         case .mission:
             stopTimer()
+            resetTimerState()
             route = .age
         case .completion:
             route = .mission
@@ -89,30 +100,43 @@ final class AppViewModel: ObservableObject {
     }
 
     func toggleTimer() {
-        timerEnabled.toggle()
-        timerEnabled ? startTimer() : stopTimer()
+        if timerIsRunning {
+            stopTimer()
+        } else {
+            if secondsRemaining == 0 { secondsRemaining = 15 * 60 }
+            timerHasStarted = true
+            startTimer()
+        }
     }
 
     func resetTimer() {
         stopTimer()
         secondsRemaining = 15 * 60
-        if timerEnabled { startTimer() }
+        timerHasStarted = false
     }
 
     private func startTimer() {
         timerTask?.cancel()
+        timerIsRunning = true
         timerTask = Task {
             while !Task.isCancelled && secondsRemaining > 0 {
                 try? await Task.sleep(for: .seconds(1))
                 guard !Task.isCancelled else { return }
                 secondsRemaining -= 1
             }
+            timerIsRunning = false
         }
     }
 
     private func stopTimer() {
         timerTask?.cancel()
         timerTask = nil
+        timerIsRunning = false
+    }
+
+    private func resetTimerState() {
+        secondsRemaining = 15 * 60
+        timerHasStarted = false
     }
 
     private func loadMissions() {

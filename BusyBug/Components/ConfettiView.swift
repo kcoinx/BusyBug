@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ConfettiView: View {
     private let colors = [BugColor.orange, BugColor.blue, BugColor.green, BugColor.yellow, BugColor.purple, BugColor.red]
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var falling = false
 
     var body: some View {
@@ -15,11 +16,10 @@ struct ConfettiView: View {
                         x: CGFloat((index * 47) % 100) / 100 * proxy.size.width,
                         y: falling ? proxy.size.height + 30 : -30
                     )
-                    .animation(
+                    .animation(reduceMotion ? nil :
                         .linear(duration: 2.1 + Double(index % 5) * 0.25)
-                        .delay(Double(index % 12) * 0.07),
-                        value: falling
-                    )
+                            .delay(Double(index % 12) * 0.07),
+                        value: falling)
             }
         }
         .allowsHitTesting(false)

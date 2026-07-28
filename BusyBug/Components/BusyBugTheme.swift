@@ -11,6 +11,52 @@ enum BugColor {
     static let ink = Color(red: 0.16, green: 0.14, blue: 0.18)
 }
 
+struct PlayfulBackground: View {
+    var body: some View {
+        GeometryReader { proxy in
+            ZStack {
+                BugColor.cream
+                Circle()
+                    .fill(BugColor.yellow.opacity(0.18))
+                    .frame(width: 240, height: 240)
+                    .position(x: proxy.size.width - 30, y: 60)
+                Circle()
+                    .fill(BugColor.blue.opacity(0.10))
+                    .frame(width: 180, height: 180)
+                    .position(x: 10, y: proxy.size.height * 0.62)
+                Circle()
+                    .fill(BugColor.orange.opacity(0.08))
+                    .frame(width: 120, height: 120)
+                    .position(x: proxy.size.width * 0.78, y: proxy.size.height * 0.88)
+            }
+        }
+        .ignoresSafeArea()
+        .accessibilityHidden(true)
+    }
+}
+
+struct ScreenTitle: View {
+    let eyebrow: String
+    let title: String
+    var message: String?
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(eyebrow.uppercased())
+                .font(.caption.bold())
+                .tracking(1.5)
+                .foregroundStyle(BugColor.orange)
+            Text(title)
+                .font(.system(.largeTitle, design: .rounded, weight: .black))
+            if let message {
+                Text(message)
+                    .font(.title3.weight(.medium))
+                    .foregroundStyle(BugColor.ink.opacity(0.68))
+            }
+        }
+    }
+}
+
 struct PrimaryButton: View {
     let title: String
     var icon: String?

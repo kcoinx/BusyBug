@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MissionView: View {
     @ObservedObject var model: AppViewModel
+    @State private var choiceFeedback = 0
 
     var body: some View {
         ScrollView {
@@ -9,6 +10,7 @@ struct MissionView: View {
                 header
                 parentBanner
                 if let mission = model.currentMission {
+                    contextRow
                     missionCard(mission)
                     if let choices = mission.choices {
                         choiceGrid(choices)
@@ -35,19 +37,36 @@ struct MissionView: View {
             Spacer()
             Button { model.toggleTimer() } label: {
                 HStack(spacing: 7) {
-                    Image(systemName: model.timerEnabled ? "timer" : "timer.square")
-                    Text(model.timerEnabled ? timeText : "15 min")
+                    Image(systemName: model.timerIsRunning ? "pause.fill" : "timer")
+                    Text(model.timerHasStarted ? timeText : "Start 15 min")
                         .monospacedDigit()
                 }
                 .font(.headline)
-                .foregroundStyle(model.timerEnabled ? .white : BugColor.purple)
+                .foregroundStyle(model.timerIsRunning ? .white : BugColor.purple)
                 .padding(.horizontal, 14)
                 .frame(minHeight: 48)
-                .background(model.timerEnabled ? BugColor.purple : .white, in: Capsule())
+                .background(model.timerIsRunning ? BugColor.purple : .white, in: Capsule())
                 .overlay(Capsule().stroke(BugColor.purple, lineWidth: 2))
             }
-            .accessibilityLabel(model.timerEnabled ? "Pause 15 minute timer, \(timeText) remaining" : "Start 15 minute timer")
+            .accessibilityLabel(timerAccessibilityLabel)
         }
+    }
+
+    private var contextRow: some View {
+        HStack(spacing: 8) {
+            if let location = model.location {
+                Label(location.title, systemImage: location.icon)
+            }
+            Spacer()
+            if model.timerHasStarted {
+                Button("Reset") { model.resetTimer() }
+                    .font(.subheadline.bold())
+                    .foregroundStyle(BugColor.purple)
+                    .frame(minHeight: 44)
+            }
+        }
+        .font(.subheadline.bold())
+        .foregroundStyle(BugColor.ink.opacity(0.62))
     }
 
     private var parentBanner: some View {
@@ -91,7 +110,10 @@ struct MissionView: View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 90), spacing: 10)], spacing: 10) {
             ForEach(choices, id: \.self) { choice in
                 Button {
-                    withAnimation(.bouncy) { model.selectedChoice = choice }
+                    withAnimation(.bouncy) {
+                        model.selectedChoice = choice
+                        choiceFeedback += 1
+                    }
                 } label: {
                     Text(choice)
                         .font(.headline)
@@ -108,6 +130,7 @@ struct MissionView: View {
                 .accessibilityAddTraits(model.selectedChoice == choice ? .isSelected : AccessibilityTraits())
             }
         }
+        .sensoryFeedback(.selection, trigger: choiceFeedback)
     }
 
     @ViewBuilder
@@ -122,6 +145,12 @@ struct MissionView: View {
 
     private var timeText: String {
         String(format: "%02d:%02d", model.secondsRemaining / 60, model.secondsRemaining % 60)
+    }
+
+    private var timerAccessibilityLabel: String {
+        if model.timerIsRunning { return "Pause timer, \(timeText) remaining" }
+        if model.timerHasStarted { return "Resume timer, \(timeText) remaining" }
+        return "Start 15 minute timer"
     }
 
     private func categoryIcon(_ category: String) -> String {

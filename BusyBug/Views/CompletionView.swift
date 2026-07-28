@@ -21,7 +21,12 @@ struct CompletionView: View {
                             .symbolEffect(.bounce, options: .repeating.speed(0.5))
                         Text("+1 Bug Sticker")
                             .font(.title2.bold())
-                        Text("You have \(model.stickers)!")
+                        if let title = model.currentMission?.title {
+                            Text("You completed “\(title)”")
+                                .font(.headline)
+                                .multilineTextAlignment(.center)
+                        }
+                        Text(stickerTotalText)
                             .font(.headline)
                             .foregroundStyle(BugColor.ink.opacity(0.65))
                     }
@@ -32,7 +37,7 @@ struct CompletionView: View {
                     PrimaryButton(title: "Next Mission", icon: "arrow.right") {
                         model.nextMission()
                     }
-                    SecondaryButton(title: "Done", icon: "house.fill") {
+                    SecondaryButton(title: "Choose a Place", icon: "mappin.and.ellipse") {
                         model.done()
                     }
                 }
@@ -44,6 +49,10 @@ struct CompletionView: View {
         .onAppear {
             withAnimation(.bouncy(duration: 0.7)) { appeared = true }
         }
+    }
+
+    private var stickerTotalText: String {
+        model.stickers == 1 ? "Your first bug—hooray!" : "\(model.stickers) bugs collected"
     }
 }
 

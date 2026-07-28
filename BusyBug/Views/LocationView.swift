@@ -12,20 +12,36 @@ struct LocationView: View {
                     Spacer()
                     StickerPill(count: model.stickers)
                 }
-                Text("Where are you?")
-                    .font(.system(.largeTitle, design: .rounded, weight: .black))
+                ScreenTitle(
+                    eyebrow: "Step 1 of 2",
+                    title: "Where are you?",
+                    message: "Pick your setting and we’ll find the fun."
+                )
                 VStack(spacing: 16) {
                     ForEach(Array(AdventureLocation.allCases.enumerated()), id: \.element.id) { index, location in
                         Button {
                             model.choose(location)
                         } label: {
                             HStack(spacing: 22) {
-                                Image(systemName: location.icon)
-                                    .font(.system(size: 42, weight: .bold))
-                                    .frame(width: 74, height: 74)
-                                    .background(.white.opacity(0.25), in: Circle())
-                                Text(location.title)
-                                    .font(.system(.title2, design: .rounded, weight: .bold))
+                                ZStack {
+                                    Circle().fill(.white.opacity(0.25))
+                                    Image(systemName: location.icon)
+                                        .font(.system(size: 38, weight: .bold))
+                                    Image(systemName: accentIcon(for: location))
+                                        .font(.caption.bold())
+                                        .padding(7)
+                                        .foregroundStyle(cardColors[index])
+                                        .background(.white, in: Circle())
+                                        .offset(x: 29, y: -29)
+                                }
+                                .frame(width: 76, height: 76)
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(location.title)
+                                        .font(.system(.title2, design: .rounded, weight: .bold))
+                                    Text(locationSubtitle(for: location))
+                                        .font(.subheadline.weight(.semibold))
+                                        .foregroundStyle(.white.opacity(0.85))
+                                }
                                 Spacer()
                                 Image(systemName: "chevron.right")
                                     .font(.title2.bold())
@@ -43,6 +59,22 @@ struct LocationView: View {
             .padding(24)
             .frame(maxWidth: 600)
             .frame(maxWidth: .infinity)
+        }
+    }
+
+    private func locationSubtitle(for location: AdventureLocation) -> String {
+        switch location {
+        case .restaurant: "Table-time adventures"
+        case .roadTrip: "Window-side discoveries"
+        case .groceryStore: "Aisle-by-aisle fun"
+        }
+    }
+
+    private func accentIcon(for location: AdventureLocation) -> String {
+        switch location {
+        case .restaurant: "cup.and.saucer.fill"
+        case .roadTrip: "road.lanes"
+        case .groceryStore: "carrot.fill"
         }
     }
 }

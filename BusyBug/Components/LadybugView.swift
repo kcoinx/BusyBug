@@ -2,6 +2,7 @@ import SwiftUI
 
 struct LadybugView: View {
     var celebrating = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var bounce = false
 
     var body: some View {
@@ -37,8 +38,11 @@ struct LadybugView: View {
         .frame(width: 170, height: 205)
         .rotationEffect(.degrees(celebrating && bounce ? 7 : -4))
         .offset(y: bounce ? -8 : 4)
-        .animation(.easeInOut(duration: 0.7).repeatForever(autoreverses: true), value: bounce)
-        .onAppear { bounce = true }
+        .animation(
+            reduceMotion ? nil : .easeInOut(duration: 0.7).repeatForever(autoreverses: true),
+            value: bounce
+        )
+        .onAppear { bounce = !reduceMotion }
         .accessibilityHidden(true)
     }
 

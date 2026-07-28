@@ -7,11 +7,11 @@ struct AgeSelectionView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
                 BackCircleButton { model.goBack() }
-                Text("How old is your\nlittle explorer?")
-                    .font(.system(.largeTitle, design: .rounded, weight: .black))
-                Text("We’ll choose missions that match their age.")
-                    .font(.title3.weight(.medium))
-                    .foregroundStyle(BugColor.ink.opacity(0.7))
+                ScreenTitle(
+                    eyebrow: "Step 2 of 2",
+                    title: "How old is your\nlittle explorer?",
+                    message: "We’ll choose missions that match their age."
+                )
                 VStack(spacing: 18) {
                     ageCard(.younger, color: BugColor.yellow)
                     ageCard(.older, color: BugColor.purple)
@@ -28,14 +28,25 @@ struct AgeSelectionView: View {
         Button {
             model.choose(age)
         } label: {
-            VStack(spacing: 14) {
-                Image(systemName: age.icon)
-                    .font(.system(size: 64, weight: .bold))
-                Text(age.title)
-                    .font(.system(.title, design: .rounded, weight: .bold))
+            HStack(spacing: 18) {
+                Text(age == .younger ? "3–4" : "5–6")
+                    .font(.system(size: 38, weight: .black, design: .rounded))
+                    .frame(width: 94, height: 94)
+                    .background(.white.opacity(0.27), in: Circle())
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(age.title)
+                        .font(.system(.title2, design: .rounded, weight: .bold))
+                    Text(age == .younger ? "Look, match & count" : "Read, remember & discover")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(age == .younger ? BugColor.ink.opacity(0.68) : .white.opacity(0.85))
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.title2.bold())
             }
+            .padding(22)
             .foregroundStyle(age == .younger ? BugColor.ink : .white)
-            .frame(maxWidth: .infinity, minHeight: 190)
+            .frame(maxWidth: .infinity, minHeight: 150)
             .background(color.gradient, in: RoundedRectangle(cornerRadius: 30))
             .shadow(color: color.opacity(0.25), radius: 8, y: 5)
         }
