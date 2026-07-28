@@ -1,0 +1,156 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B00000000000000000000001 /* BusyBugApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000001 /* BusyBugApp.swift */; };
+		B00000000000000000000002 /* Mission.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000002 /* Mission.swift */; };
+		B00000000000000000000003 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000003 /* AppViewModel.swift */; };
+		B00000000000000000000004 /* BusyBugTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000004 /* BusyBugTheme.swift */; };
+		B00000000000000000000005 /* LadybugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000005 /* LadybugView.swift */; };
+		B00000000000000000000006 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000006 /* ConfettiView.swift */; };
+		B00000000000000000000007 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000007 /* RootView.swift */; };
+		B00000000000000000000008 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000008 /* WelcomeView.swift */; };
+		B00000000000000000000009 /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000009 /* LocationView.swift */; };
+		B0000000000000000000000A /* AgeSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0000000000000000000000A /* AgeSelectionView.swift */; };
+		B0000000000000000000000B /* MissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0000000000000000000000B /* MissionView.swift */; };
+		B0000000000000000000000C /* CompletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0000000000000000000000C /* CompletionView.swift */; };
+		B0000000000000000000000D /* missions.json in Resources */ = {isa = PBXBuildFile; fileRef = C0000000000000000000000D /* missions.json */; };
+		B0000000000000000000000E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0000000000000000000000E /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		C00000000000000000000001 /* BusyBugApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusyBugApp.swift; sourceTree = "<group>"; };
+		C00000000000000000000002 /* Mission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mission.swift; sourceTree = "<group>"; };
+		C00000000000000000000003 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
+		C00000000000000000000004 /* BusyBugTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusyBugTheme.swift; sourceTree = "<group>"; };
+		C00000000000000000000005 /* LadybugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LadybugView.swift; sourceTree = "<group>"; };
+		C00000000000000000000006 /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
+		C00000000000000000000007 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		C00000000000000000000008 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		C00000000000000000000009 /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
+		C0000000000000000000000A /* AgeSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeSelectionView.swift; sourceTree = "<group>"; };
+		C0000000000000000000000B /* MissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionView.swift; sourceTree = "<group>"; };
+		C0000000000000000000000C /* CompletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionView.swift; sourceTree = "<group>"; };
+		C0000000000000000000000D /* missions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = missions.json; sourceTree = "<group>"; };
+		C0000000000000000000000E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C0000000000000000000000F /* BusyBug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BusyBug.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D00000000000000000000001 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E00000000000000000000001 = {
+			isa = PBXGroup;
+			children = (E00000000000000000000002 /* BusyBug */, E00000000000000000000008 /* Products */);
+			sourceTree = "<group>";
+		};
+		E00000000000000000000002 /* BusyBug */ = {
+			isa = PBXGroup;
+			children = (
+				C00000000000000000000001 /* BusyBugApp.swift */,
+				E00000000000000000000003 /* Models */,
+				E00000000000000000000004 /* Views */,
+				E00000000000000000000005 /* ViewModels */,
+				E00000000000000000000006 /* Components */,
+				E00000000000000000000007 /* Resources */,
+				C0000000000000000000000E /* Assets.xcassets */,
+			);
+			path = BusyBug;
+			sourceTree = "<group>";
+		};
+		E00000000000000000000003 /* Models */ = {isa = PBXGroup; children = (C00000000000000000000002 /* Mission.swift */); path = Models; sourceTree = "<group>"; };
+		E00000000000000000000004 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C00000000000000000000007 /* RootView.swift */,
+				C00000000000000000000008 /* WelcomeView.swift */,
+				C00000000000000000000009 /* LocationView.swift */,
+				C0000000000000000000000A /* AgeSelectionView.swift */,
+				C0000000000000000000000B /* MissionView.swift */,
+				C0000000000000000000000C /* CompletionView.swift */,
+			);
+			path = Views; sourceTree = "<group>";
+		};
+		E00000000000000000000005 /* ViewModels */ = {isa = PBXGroup; children = (C00000000000000000000003 /* AppViewModel.swift */); path = ViewModels; sourceTree = "<group>"; };
+		E00000000000000000000006 /* Components */ = {isa = PBXGroup; children = (C00000000000000000000004 /* BusyBugTheme.swift */, C00000000000000000000005 /* LadybugView.swift */, C00000000000000000000006 /* ConfettiView.swift */); path = Components; sourceTree = "<group>"; };
+		E00000000000000000000007 /* Resources */ = {isa = PBXGroup; children = (C0000000000000000000000D /* missions.json */); path = Resources; sourceTree = "<group>"; };
+		E00000000000000000000008 /* Products */ = {isa = PBXGroup; children = (C0000000000000000000000F /* BusyBug.app */); name = Products; sourceTree = "<group>"; };
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F00000000000000000000001 /* BusyBug */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F00000000000000000000004 /* Build configuration list for PBXNativeTarget "BusyBug" */;
+			buildPhases = (D00000000000000000000002 /* Sources */, D00000000000000000000001 /* Frameworks */, D00000000000000000000003 /* Resources */);
+			buildRules = ();
+			dependencies = ();
+			name = BusyBug;
+			productName = BusyBug;
+			productReference = C0000000000000000000000F /* BusyBug.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F00000000000000000000002 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {BuildIndependentTargetsInParallel = 1; LastSwiftUpdateCheck = 1600; LastUpgradeCheck = 1600; TargetAttributes = {F00000000000000000000001 = {CreatedOnToolsVersion = 16.0;};};};
+			buildConfigurationList = F00000000000000000000003 /* Build configuration list for PBXProject "BusyBug" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (en, Base);
+			mainGroup = E00000000000000000000001;
+			productRefGroup = E00000000000000000000008 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (F00000000000000000000001 /* BusyBug */);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D00000000000000000000003 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (B0000000000000000000000D /* missions.json in Resources */, B0000000000000000000000E /* Assets.xcassets in Resources */); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D00000000000000000000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B00000000000000000000001 /* BusyBugApp.swift in Sources */,
+				B00000000000000000000002 /* Mission.swift in Sources */,
+				B00000000000000000000003 /* AppViewModel.swift in Sources */,
+				B00000000000000000000004 /* BusyBugTheme.swift in Sources */,
+				B00000000000000000000005 /* LadybugView.swift in Sources */,
+				B00000000000000000000006 /* ConfettiView.swift in Sources */,
+				B00000000000000000000007 /* RootView.swift in Sources */,
+				B00000000000000000000008 /* WelcomeView.swift in Sources */,
+				B00000000000000000000009 /* LocationView.swift in Sources */,
+				B0000000000000000000000A /* AgeSelectionView.swift in Sources */,
+				B0000000000000000000000B /* MissionView.swift in Sources */,
+				B0000000000000000000000C /* CompletionView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A00000000000000000000001 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; CLANG_ENABLE_OBJC_ARC = YES; COPY_PHASE_STRIP = NO; DEBUG_INFORMATION_FORMAT = dwarf; ENABLE_TESTABILITY = YES; GCC_C_LANGUAGE_STANDARD = gnu17; GCC_OPTIMIZATION_LEVEL = 0; GCC_PREPROCESSOR_DEFINITIONS = ("DEBUG=1", "$(inherited)"); IPHONEOS_DEPLOYMENT_TARGET = 17.0; MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE; ONLY_ACTIVE_ARCH = YES; SDKROOT = iphoneos; SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)"; SWIFT_OPTIMIZATION_LEVEL = "-Onone"; }; name = Debug; };
+		A00000000000000000000002 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; CLANG_ENABLE_OBJC_ARC = YES; COPY_PHASE_STRIP = NO; DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym"; ENABLE_NS_ASSERTIONS = NO; GCC_C_LANGUAGE_STANDARD = gnu17; IPHONEOS_DEPLOYMENT_TARGET = 17.0; MTL_ENABLE_DEBUG_INFO = NO; SDKROOT = iphoneos; SWIFT_COMPILATION_MODE = wholemodule; SWIFT_OPTIMIZATION_LEVEL = "-O"; VALIDATE_PRODUCT = YES; }; name = Release; };
+		A00000000000000000000003 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; DEVELOPMENT_ASSET_PATHS = ""; ENABLE_PREVIEWS = YES; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_CFBundleDisplayName = BusyBug; INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education"; INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES; INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES; INFOPLIST_KEY_UILaunchScreen_Generation = YES; INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait; IPHONEOS_DEPLOYMENT_TARGET = 17.0; MARKETING_VERSION = 1.0; PRODUCT_BUNDLE_IDENTIFIER = com.busybug.app; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = 1; }; name = Debug; };
+		A00000000000000000000004 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; DEVELOPMENT_ASSET_PATHS = ""; ENABLE_PREVIEWS = YES; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_CFBundleDisplayName = BusyBug; INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education"; INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES; INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES; INFOPLIST_KEY_UILaunchScreen_Generation = YES; INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait; IPHONEOS_DEPLOYMENT_TARGET = 17.0; MARKETING_VERSION = 1.0; PRODUCT_BUNDLE_IDENTIFIER = com.busybug.app; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = 1; }; name = Release; };
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F00000000000000000000003 /* Build configuration list for PBXProject "BusyBug" */ = {isa = XCConfigurationList; buildConfigurations = (A00000000000000000000001 /* Debug */, A00000000000000000000002 /* Release */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		F00000000000000000000004 /* Build configuration list for PBXNativeTarget "BusyBug" */ = {isa = XCConfigurationList; buildConfigurations = (A00000000000000000000003 /* Debug */, A00000000000000000000004 /* Release */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End XCConfigurationList section */
+	};
+	rootObject = F00000000000000000000002 /* Project object */;
+}

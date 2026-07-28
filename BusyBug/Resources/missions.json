@@ -1,0 +1,37 @@
+[
+  {"id":"r34-1","location":"restaurant","ageGroup":"3_4","category":"Color Hunt","title":"Quiet Color Hunt","instruction":"Can you find something this color at the table?","choices":["Red","Blue","Green"]},
+  {"id":"r34-2","location":"restaurant","ageGroup":"3_4","category":"Counting","title":"Fork Count","instruction":"How many forks can you see? Count them softly together.","choices":null},
+  {"id":"r34-3","location":"restaurant","ageGroup":"3_4","category":"Shape Hunt","title":"Round and Round","instruction":"Find something shaped like a circle. Point without touching!","choices":["Plate","Cup","Other"]},
+  {"id":"r34-4","location":"restaurant","ageGroup":"3_4","category":"Observation","title":"Tiny Detective","instruction":"Find one thing that is shiny and one thing that is soft.","choices":null},
+  {"id":"r34-5","location":"restaurant","ageGroup":"3_4","category":"Memory Game","title":"What Disappeared?","instruction":"Look at three table items. Close your eyes while a grown-up hides one. What is missing?","choices":null},
+
+  {"id":"r56-1","location":"restaurant","ageGroup":"5_6","category":"Letter Hunt","title":"Menu Letter Search","instruction":"Can you find three words on the menu that start with the same letter?","choices":null},
+  {"id":"r56-2","location":"restaurant","ageGroup":"5_6","category":"Counting","title":"Table Math","instruction":"Count all the cups and plates. Which group has more?","choices":["Cups","Plates","Same"]},
+  {"id":"r56-3","location":"restaurant","ageGroup":"5_6","category":"Memory Game","title":"Order Expert","instruction":"Listen to everyone’s order. Can you remember who chose what?","choices":null},
+  {"id":"r56-4","location":"restaurant","ageGroup":"5_6","category":"Observation","title":"Five Senses Spy","instruction":"Name one thing you can see, hear, smell, touch, and taste.","choices":null},
+  {"id":"r56-5","location":"restaurant","ageGroup":"5_6","category":"Object Search","title":"Alphabet Table","instruction":"Find table items whose names begin with F, C, and P.","choices":["Found 1","Found 2","Found 3"]},
+
+  {"id":"t34-1","location":"road_trip","ageGroup":"3_4","category":"Color Hunt","title":"Car Color Bingo","instruction":"Which color car can you spot first?","choices":["Red","Blue","Yellow"]},
+  {"id":"t34-2","location":"road_trip","ageGroup":"3_4","category":"Counting","title":"Big Truck Count","instruction":"Count five big trucks out the window. Tell me when you reach five!","choices":null},
+  {"id":"t34-3","location":"road_trip","ageGroup":"3_4","category":"Shape Hunt","title":"Window Shapes","instruction":"Can you spot a circle, a square, and a triangle outside?","choices":["Circle","Square","Triangle"]},
+  {"id":"t34-4","location":"road_trip","ageGroup":"3_4","category":"Observation","title":"Cloud Creatures","instruction":"Look at the clouds. Does one look like an animal? What animal is it?","choices":null},
+  {"id":"t34-5","location":"road_trip","ageGroup":"3_4","category":"Memory Game","title":"I Packed a Bag","instruction":"Say one thing to pack. A grown-up adds one. Can you remember both?","choices":null},
+
+  {"id":"t56-1","location":"road_trip","ageGroup":"5_6","category":"Letter Hunt","title":"Sign Letter Safari","instruction":"Find the letters B, U, and G on signs outside.","choices":["B","U","G"]},
+  {"id":"t56-2","location":"road_trip","ageGroup":"5_6","category":"Counting","title":"Ten-Car Tally","instruction":"Watch ten cars pass. How many are light colors and how many are dark?","choices":null},
+  {"id":"t56-3","location":"road_trip","ageGroup":"5_6","category":"Observation","title":"What Changed?","instruction":"Study the view for ten seconds. Close your eyes, then name three things you remember.","choices":null},
+  {"id":"t56-4","location":"road_trip","ageGroup":"5_6","category":"Word Game","title":"Silly Story Road","instruction":"Make a tiny story using a car, a tree, and something you see outside.","choices":null},
+  {"id":"t56-5","location":"road_trip","ageGroup":"5_6","category":"Object Search","title":"Roadside Rainbow","instruction":"Spot something outside for four different rainbow colors.","choices":["2 Colors","3 Colors","4 Colors"]},
+
+  {"id":"g34-1","location":"grocery_store","ageGroup":"3_4","category":"Color Hunt","title":"Produce Rainbow","instruction":"Find a fruit or vegetable in each color.","choices":["Red","Green","Yellow"]},
+  {"id":"g34-2","location":"grocery_store","ageGroup":"3_4","category":"Counting","title":"Apple Counter","instruction":"Help count four apples as they go into the bag.","choices":["1","2","3","4"]},
+  {"id":"g34-3","location":"grocery_store","ageGroup":"3_4","category":"Shape Hunt","title":"Box or Can?","instruction":"Find one box and one round can on the shelf.","choices":["Box","Can","Both"]},
+  {"id":"g34-4","location":"grocery_store","ageGroup":"3_4","category":"Object Search","title":"Cold Food Finder","instruction":"Point to three foods that need to stay cold.","choices":null},
+  {"id":"g34-5","location":"grocery_store","ageGroup":"3_4","category":"Observation","title":"Loud or Quiet?","instruction":"Listen carefully. Name one loud sound and one quiet sound.","choices":["Loud","Quiet","Both"]},
+
+  {"id":"g56-1","location":"grocery_store","ageGroup":"5_6","category":"Letter Hunt","title":"Aisle Alphabet","instruction":"Find food labels beginning with A, B, and C.","choices":["A","B","C"]},
+  {"id":"g56-2","location":"grocery_store","ageGroup":"5_6","category":"Counting","title":"Perfect Half Dozen","instruction":"Choose six pieces of produce and count them into the bag.","choices":["4","5","6"]},
+  {"id":"g56-3","location":"grocery_store","ageGroup":"5_6","category":"Observation","title":"Food Group Detective","instruction":"Find one fruit, vegetable, grain, and dairy food.","choices":["2 Groups","3 Groups","4 Groups"]},
+  {"id":"g56-4","location":"grocery_store","ageGroup":"5_6","category":"Memory Game","title":"Shopping List Star","instruction":"Remember these three items: milk, bananas, and bread. Tell us when you spot each one.","choices":null},
+  {"id":"g56-5","location":"grocery_store","ageGroup":"5_6","category":"Object Search","title":"Package Patterns","instruction":"Find a package with stripes, one with spots, and one with a picture of an animal.","choices":["Stripes","Spots","Animal"]}
+]

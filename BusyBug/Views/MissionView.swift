@@ -1,0 +1,151 @@
+import SwiftUI
+
+struct MissionView: View {
+    @ObservedObject var model: AppViewModel
+
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 18) {
+                header
+                parentBanner
+                if let mission = model.currentMission {
+                    missionCard(mission)
+                    if let choices = mission.choices {
+                        choiceGrid(choices)
+                    }
+                }
+                ViewThatFits {
+                    HStack(spacing: 14) {
+                        actionButtons
+                    }
+                    VStack(spacing: 12) {
+                        actionButtons
+                    }
+                }
+            }
+            .padding(20)
+            .frame(maxWidth: 650)
+            .frame(maxWidth: .infinity)
+        }
+    }
+
+    private var header: some View {
+        HStack {
+            BackCircleButton { model.goBack() }
+            Spacer()
+            Button { model.toggleTimer() } label: {
+                HStack(spacing: 7) {
+                    Image(systemName: model.timerEnabled ? "timer" : "timer.square")
+                    Text(model.timerEnabled ? timeText : "15 min")
+                        .monospacedDigit()
+                }
+                .font(.headline)
+                .foregroundStyle(model.timerEnabled ? .white : BugColor.purple)
+                .padding(.horizontal, 14)
+                .frame(minHeight: 48)
+                .background(model.timerEnabled ? BugColor.purple : .white, in: Capsule())
+                .overlay(Capsule().stroke(BugColor.purple, lineWidth: 2))
+            }
+            .accessibilityLabel(model.timerEnabled ? "Pause 15 minute timer, \(timeText) remaining" : "Start 15 minute timer")
+        }
+    }
+
+    private var parentBanner: some View {
+        Label("Parent: Read this to your child", systemImage: "person.fill")
+            .font(.subheadline.bold())
+            .foregroundStyle(BugColor.ink)
+            .frame(maxWidth: .infinity)
+            .padding(13)
+            .background(BugColor.yellow.opacity(0.8), in: RoundedRectangle(cornerRadius: 16))
+    }
+
+    private func missionCard(_ mission: Mission) -> some View {
+        VStack(spacing: 16) {
+            Text(mission.category.uppercased())
+                .font(.caption.bold())
+                .tracking(1.4)
+                .foregroundStyle(BugColor.purple)
+                .padding(.horizontal, 13)
+                .padding(.vertical, 7)
+                .background(BugColor.purple.opacity(0.12), in: Capsule())
+            Text(mission.title)
+                .font(.system(.title, design: .rounded, weight: .black))
+                .multilineTextAlignment(.center)
+            Image(systemName: categoryIcon(mission.category))
+                .font(.system(size: 54, weight: .bold))
+                .foregroundStyle(BugColor.blue)
+                .symbolEffect(.bounce, value: mission.id)
+            Text(mission.instruction)
+                .font(.title2.weight(.semibold))
+                .multilineTextAlignment(.center)
+                .lineSpacing(5)
+        }
+        .padding(24)
+        .frame(maxWidth: .infinity, minHeight: 300)
+        .background(.white.opacity(0.9), in: RoundedRectangle(cornerRadius: 30))
+        .shadow(color: BugColor.blue.opacity(0.12), radius: 9, y: 5)
+        .id(mission.id)
+    }
+
+    private func choiceGrid(_ choices: [String]) -> some View {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 90), spacing: 10)], spacing: 10) {
+            ForEach(choices, id: \.self) { choice in
+                Button {
+                    withAnimation(.bouncy) { model.selectedChoice = choice }
+                } label: {
+                    Text(choice)
+                        .font(.headline)
+                        .minimumScaleFactor(0.8)
+                        .foregroundStyle(model.selectedChoice == choice ? .white : color(for: choice))
+                        .frame(maxWidth: .infinity, minHeight: 58)
+                        .background(
+                            model.selectedChoice == choice ? color(for: choice) : color(for: choice).opacity(0.13),
+                            in: RoundedRectangle(cornerRadius: 18)
+                        )
+                        .overlay(RoundedRectangle(cornerRadius: 18).stroke(color(for: choice), lineWidth: 2))
+                }
+                .buttonStyle(.plain)
+                .accessibilityAddTraits(model.selectedChoice == choice ? .isSelected : AccessibilityTraits())
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var actionButtons: some View {
+        SecondaryButton(title: "New One", icon: "arrow.triangle.2.circlepath") {
+            model.showNewMission()
+        }
+        PrimaryButton(title: "We Did It!", icon: "checkmark") {
+            model.completeMission()
+        }
+    }
+
+    private var timeText: String {
+        String(format: "%02d:%02d", model.secondsRemaining / 60, model.secondsRemaining % 60)
+    }
+
+    private func categoryIcon(_ category: String) -> String {
+        let lower = category.lowercased()
+        if lower.contains("color") { return "paintpalette.fill" }
+        if lower.contains("count") { return "number.circle.fill" }
+        if lower.contains("letter") { return "textformat.abc" }
+        if lower.contains("memory") { return "brain.head.profile" }
+        if lower.contains("shape") { return "square.on.circle.fill" }
+        return "eye.fill"
+    }
+
+    private func color(for choice: String) -> Color {
+        switch choice.lowercased() {
+        case "red": BugColor.red
+        case "blue": BugColor.blue
+        case "green": BugColor.green
+        case "yellow": Color(red: 0.83, green: 0.62, blue: 0.0)
+        default: BugColor.purple
+        }
+    }
+}
+
+#Preview {
+    let model = AppViewModel()
+    MissionView(model: model)
+}
