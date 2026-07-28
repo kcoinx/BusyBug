@@ -210,10 +210,14 @@ struct LadybugView: View {
     private var rotation: Double {
         guard animated, !reduceMotion else { return 0 }
         switch state {
-        case .celebrating: 5
-        case .thinking: -3
-        case .encouraging: 2
-        case .welcome: -1
+        case .celebrating:
+            return 5
+        case .thinking:
+            return -3
+        case .encouraging:
+            return 2
+        case .welcome:
+            return -1
         }
     }
 
