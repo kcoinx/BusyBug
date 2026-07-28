@@ -9,6 +9,7 @@ struct RootView: View {
             Group {
                 switch model.route {
                 case .welcome: WelcomeView(model: model)
+                case .bugBook: BugBookView(model: model)
                 case .location: LocationView(model: model)
                 case .age: AgeSelectionView(model: model)
                 case .mission: MissionView(model: model)

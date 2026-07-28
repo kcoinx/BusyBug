@@ -7,7 +7,7 @@ struct WelcomeView: View {
         ScrollView {
             VStack(spacing: 22) {
                 Spacer(minLength: 24)
-                LadybugView()
+                LadybugView(state: .welcome)
                 VStack(spacing: 8) {
                     Text("BusyBug")
                         .font(.system(.largeTitle, design: .rounded, weight: .black))
@@ -32,6 +32,35 @@ struct WelcomeView: View {
                 PrimaryButton(title: "Start Exploring", icon: "arrow.right") {
                     model.begin()
                 }
+                Button {
+                    model.showBugBook()
+                } label: {
+                    HStack(spacing: 14) {
+                        Image(systemName: "book.closed.fill")
+                            .font(.title2.bold())
+                            .foregroundStyle(BugColor.purple)
+                            .frame(width: 48, height: 48)
+                            .background(BugColor.purple.opacity(0.12), in: Circle())
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("My Bug Book")
+                                .font(.headline)
+                                .foregroundStyle(BugColor.ink)
+                            Text(bugBookSubtitle)
+                                .font(.subheadline)
+                                .foregroundStyle(BugColor.ink.opacity(0.62))
+                        }
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(.headline.bold())
+                            .foregroundStyle(BugColor.purple)
+                    }
+                    .padding(14)
+                    .frame(maxWidth: .infinity, minHeight: 72)
+                    .background(.white.opacity(0.82), in: RoundedRectangle(cornerRadius: 22))
+                    .overlay(RoundedRectangle(cornerRadius: 22).stroke(BugColor.purple.opacity(0.22), lineWidth: 2))
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("My Bug Book, \(bugBookSubtitle)")
                 Text("No setup, screens, or supplies needed.")
                     .font(.footnote.weight(.semibold))
                     .foregroundStyle(BugColor.ink.opacity(0.55))
@@ -41,6 +70,10 @@ struct WelcomeView: View {
             .frame(minHeight: 720)
             .frame(maxWidth: .infinity)
         }
+    }
+
+    private var bugBookSubtitle: String {
+        "\(model.earnedStickerIDs.count) of \(BugSticker.collection.count) bugs found"
     }
 
     private func welcomeStep(icon: String, label: String, color: Color) -> some View {
@@ -65,4 +98,4 @@ struct WelcomeView: View {
     }
 }
 
-#Preview { WelcomeView(model: AppViewModel()) }
+#Preview { WelcomeView(model: AppViewModel.preview(stickerCount: 5)) }

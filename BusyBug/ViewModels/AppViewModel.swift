@@ -4,7 +4,7 @@ import Combine
 @MainActor
 final class AppViewModel: ObservableObject {
     enum Route: Equatable {
-        case welcome, location, age, mission, completion
+        case welcome, bugBook, location, age, mission, completion
     }
 
     @Published var route: Route = .welcome
@@ -13,8 +13,18 @@ final class AppViewModel: ObservableObject {
     @Published var currentMission: Mission?
     @Published var selectedChoice: String?
     @Published var stickers: Int {
-        didSet { UserDefaults.standard.set(stickers, forKey: "bugStickerCount") }
+        didSet {
+            guard persistenceEnabled else { return }
+            UserDefaults.standard.set(stickers, forKey: "bugStickerCount")
+        }
     }
+    @Published private(set) var earnedStickerIDs: Set<String> {
+        didSet {
+            guard persistenceEnabled else { return }
+            UserDefaults.standard.set(Array(earnedStickerIDs), forKey: "earnedBugStickerIDs")
+        }
+    }
+    @Published private(set) var awardedSticker: BugSticker?
     @Published var timerIsRunning = false
     @Published var timerHasStarted = false
     @Published var secondsRemaining = 15 * 60
@@ -23,15 +33,26 @@ final class AppViewModel: ObservableObject {
     private var recentMissionIDs: [String] = []
     private var timerTask: Task<Void, Never>?
     private var currentMissionAwarded = false
+    private let persistenceEnabled: Bool
 
-    init() {
-        stickers = UserDefaults.standard.integer(forKey: "bugStickerCount")
+    init(persistenceEnabled: Bool = true, stickerCount: Int? = nil) {
+        self.persistenceEnabled = persistenceEnabled
+        let savedCount = stickerCount ?? UserDefaults.standard.integer(forKey: "bugStickerCount")
+        let savedIDs = persistenceEnabled
+            ? Set(UserDefaults.standard.stringArray(forKey: "earnedBugStickerIDs") ?? [])
+            : []
+        stickers = savedCount
+        earnedStickerIDs = savedIDs.isEmpty && savedCount > 0
+            ? Set(BugSticker.collection.prefix(min(savedCount, BugSticker.collection.count)).map(\.id))
+            : savedIDs
+        awardedSticker = nil
         loadMissions()
     }
 
     deinit { timerTask?.cancel() }
 
     func begin() { route = .location }
+    func showBugBook() { route = .bugBook }
 
     func choose(_ newLocation: AdventureLocation) {
         location = newLocation
@@ -55,6 +76,7 @@ final class AppViewModel: ObservableObject {
         }
         currentMission = available.randomElement()
         selectedChoice = nil
+        awardedSticker = nil
         currentMissionAwarded = false
         if let id = currentMission?.id {
             recentMissionIDs.append(id)
@@ -65,6 +87,7 @@ final class AppViewModel: ObservableObject {
     func completeMission() {
         guard !currentMissionAwarded else { return }
         currentMissionAwarded = true
+        awardSticker()
         stickers += 1
         stopTimer()
         route = .completion
@@ -86,6 +109,8 @@ final class AppViewModel: ObservableObject {
 
     func goBack() {
         switch route {
+        case .bugBook:
+            route = .welcome
         case .age:
             route = .location
         case .mission:
@@ -147,5 +172,31 @@ final class AppViewModel: ObservableObject {
             return
         }
         missions = decoded
+    }
+
+    private func awardSticker() {
+        if let next = BugSticker.collection.first(where: { !earnedStickerIDs.contains($0.id) }) {
+            awardedSticker = next
+            earnedStickerIDs.insert(next.id)
+        } else if !BugSticker.collection.isEmpty {
+            awardedSticker = BugSticker.collection[stickers % BugSticker.collection.count]
+        }
+    }
+
+    static func preview(stickerCount: Int = 0) -> AppViewModel {
+        AppViewModel(persistenceEnabled: false, stickerCount: stickerCount)
+    }
+
+    static func missionPreview() -> AppViewModel {
+        let model = preview(stickerCount: 4)
+        model.choose(.restaurant)
+        model.choose(.younger)
+        return model
+    }
+
+    static func completionPreview() -> AppViewModel {
+        let model = missionPreview()
+        model.completeMission()
+        return model
     }
 }

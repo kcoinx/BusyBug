@@ -90,10 +90,13 @@ struct MissionView: View {
             Text(mission.title)
                 .font(.system(.title, design: .rounded, weight: .black))
                 .multilineTextAlignment(.center)
-            Image(systemName: categoryIcon(mission.category))
-                .font(.system(size: 54, weight: .bold))
-                .foregroundStyle(BugColor.blue)
-                .symbolEffect(.bounce, value: mission.id)
+            HStack(spacing: 14) {
+                Image(systemName: categoryIcon(mission.category))
+                    .font(.system(size: 48, weight: .bold))
+                    .foregroundStyle(BugColor.blue)
+                    .symbolEffect(.bounce, value: mission.id)
+                LadybugView(state: .thinking, size: 66)
+            }
             Text(mission.instruction)
                 .font(.title2.weight(.semibold))
                 .multilineTextAlignment(.center)
@@ -156,10 +159,14 @@ struct MissionView: View {
     private func categoryIcon(_ category: String) -> String {
         let lower = category.lowercased()
         if lower.contains("color") { return "paintpalette.fill" }
+        if lower.contains("rainbow") { return "rainbow" }
         if lower.contains("count") { return "number.circle.fill" }
         if lower.contains("letter") { return "textformat.abc" }
+        if lower.contains("alphabet") { return "textformat.abc" }
         if lower.contains("memory") { return "brain.head.profile" }
         if lower.contains("shape") { return "square.on.circle.fill" }
+        if lower.contains("treasure") { return "shippingbox.fill" }
+        if lower.contains("safari") { return "binoculars.fill" }
         return "eye.fill"
     }
 
@@ -175,6 +182,6 @@ struct MissionView: View {
 }
 
 #Preview {
-    let model = AppViewModel()
+    let model = AppViewModel.missionPreview()
     MissionView(model: model)
 }
