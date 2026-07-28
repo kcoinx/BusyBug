@@ -36,11 +36,12 @@ struct BugStickerView: View {
 
             if showName {
                 Text(isEarned ? sticker.name : "Mystery Bug")
-                    .font(.caption.bold())
+                    .font(.system(.caption, design: .rounded, weight: .bold))
                     .multilineTextAlignment(.center)
                     .foregroundStyle(isEarned ? BugColor.ink : BugColor.ink.opacity(0.45))
                     .lineLimit(2)
                     .minimumScaleFactor(0.8)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
         .accessibilityElement(children: .ignore)

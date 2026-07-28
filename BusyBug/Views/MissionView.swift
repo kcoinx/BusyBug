@@ -6,7 +6,7 @@ struct MissionView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 18) {
+            VStack(spacing: BugLayout.cardSpacing) {
                 header
                 parentBanner
                 if let mission = model.currentMission {
@@ -25,7 +25,7 @@ struct MissionView: View {
                     }
                 }
             }
-            .padding(20)
+            .padding(BugLayout.screenPadding)
             .frame(maxWidth: 650)
             .frame(maxWidth: .infinity)
         }
@@ -41,13 +41,15 @@ struct MissionView: View {
                     Text(model.timerHasStarted ? timeText : "Start 15 min")
                         .monospacedDigit()
                 }
-                .font(.headline)
+                .font(.system(.headline, design: .rounded, weight: .bold))
                 .foregroundStyle(model.timerIsRunning ? .white : BugColor.purple)
                 .padding(.horizontal, 14)
                 .frame(minHeight: 48)
                 .background(model.timerIsRunning ? BugColor.purple : .white, in: Capsule())
-                .overlay(Capsule().stroke(BugColor.purple, lineWidth: 2))
+                .overlay(Capsule().stroke(BugColor.purple.opacity(0.9), lineWidth: 1.5))
+                .contentTransition(.numericText())
             }
+            .buttonStyle(BugPressButtonStyle())
             .accessibilityLabel(timerAccessibilityLabel)
         }
     }
@@ -59,23 +61,27 @@ struct MissionView: View {
             }
             Spacer()
             if model.timerHasStarted {
-                Button("Reset") { model.resetTimer() }
-                    .font(.subheadline.bold())
-                    .foregroundStyle(BugColor.purple)
-                    .frame(minHeight: 44)
+                Button { model.resetTimer() } label: {
+                    Label("Reset", systemImage: "arrow.counterclockwise")
+                }
+                .font(.system(.subheadline, design: .rounded, weight: .bold))
+                .foregroundStyle(BugColor.purple)
+                .frame(minHeight: 44)
+                .buttonStyle(BugPressButtonStyle())
             }
         }
-        .font(.subheadline.bold())
+        .font(.system(.subheadline, design: .rounded, weight: .bold))
         .foregroundStyle(BugColor.ink.opacity(0.62))
     }
 
     private var parentBanner: some View {
-        Label("Parent: Read this to your child", systemImage: "person.fill")
-            .font(.subheadline.bold())
+        Label("Parent: Read this to your child", systemImage: "person.crop.circle.fill")
+            .font(.system(.subheadline, design: .rounded, weight: .bold))
             .foregroundStyle(BugColor.ink)
             .frame(maxWidth: .infinity)
             .padding(13)
-            .background(BugColor.yellow.opacity(0.8), in: RoundedRectangle(cornerRadius: 16))
+            .background(BugColor.yellow.opacity(0.7), in: RoundedRectangle(cornerRadius: 16))
+            .overlay(RoundedRectangle(cornerRadius: 16).stroke(.white.opacity(0.6), lineWidth: 1))
     }
 
     private func missionCard(_ mission: Mission) -> some View {
@@ -90,6 +96,7 @@ struct MissionView: View {
             Text(mission.title)
                 .font(.system(.title, design: .rounded, weight: .black))
                 .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
             HStack(spacing: 14) {
                 Image(systemName: categoryIcon(mission.category))
                     .font(.system(size: 48, weight: .bold))
@@ -98,14 +105,14 @@ struct MissionView: View {
                 LadybugView(state: .thinking, size: 66)
             }
             Text(mission.instruction)
-                .font(.title2.weight(.semibold))
+                .font(.system(.title2, design: .rounded, weight: .semibold))
                 .multilineTextAlignment(.center)
                 .lineSpacing(5)
+                .fixedSize(horizontal: false, vertical: true)
         }
         .padding(24)
         .frame(maxWidth: .infinity, minHeight: 300)
-        .background(.white.opacity(0.9), in: RoundedRectangle(cornerRadius: 30))
-        .shadow(color: BugColor.blue.opacity(0.12), radius: 9, y: 5)
+        .bugCard(tint: BugColor.blue)
         .id(mission.id)
     }
 
@@ -119,7 +126,7 @@ struct MissionView: View {
                     }
                 } label: {
                     Text(choice)
-                        .font(.headline)
+                        .font(.system(.headline, design: .rounded, weight: .bold))
                         .minimumScaleFactor(0.8)
                         .foregroundStyle(model.selectedChoice == choice ? .white : color(for: choice))
                         .frame(maxWidth: .infinity, minHeight: 58)
@@ -127,9 +134,9 @@ struct MissionView: View {
                             model.selectedChoice == choice ? color(for: choice) : color(for: choice).opacity(0.13),
                             in: RoundedRectangle(cornerRadius: 18)
                         )
-                        .overlay(RoundedRectangle(cornerRadius: 18).stroke(color(for: choice), lineWidth: 2))
+                        .overlay(RoundedRectangle(cornerRadius: 18).stroke(color(for: choice).opacity(0.9), lineWidth: 2))
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(BugPressButtonStyle())
                 .accessibilityAddTraits(model.selectedChoice == choice ? .isSelected : AccessibilityTraits())
             }
         }
@@ -184,4 +191,9 @@ struct MissionView: View {
 #Preview {
     let model = AppViewModel.missionPreview()
     MissionView(model: model)
+}
+
+#Preview("Mission – Larger Text") {
+    MissionView(model: AppViewModel.missionPreview())
+        .environment(\.dynamicTypeSize, .accessibility1)
 }

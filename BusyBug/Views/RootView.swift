@@ -2,6 +2,7 @@ import SwiftUI
 
 struct RootView: View {
     @StateObject private var model = AppViewModel()
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         ZStack {
@@ -16,14 +17,15 @@ struct RootView: View {
                 case .completion: CompletionView(model: model)
                 }
             }
-            .transition(.asymmetric(
+            .transition(reduceMotion ? .opacity : .asymmetric(
                 insertion: .move(edge: .trailing).combined(with: .opacity),
                 removal: .move(edge: .leading).combined(with: .opacity)
             ))
         }
         .tint(BugColor.orange)
+        .symbolRenderingMode(.hierarchical)
         .foregroundStyle(BugColor.ink)
-        .animation(.snappy(duration: 0.35), value: model.route)
+        .animation(reduceMotion ? nil : .snappy(duration: 0.35), value: model.route)
         .sensoryFeedback(.success, trigger: model.stickers)
     }
 }

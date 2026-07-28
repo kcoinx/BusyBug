@@ -9,6 +9,47 @@ enum BugColor {
     static let red = Color(red: 0.94, green: 0.27, blue: 0.25)
     static let purple = Color(red: 0.55, green: 0.38, blue: 0.86)
     static let ink = Color(red: 0.16, green: 0.14, blue: 0.18)
+    static let surface = Color.white.opacity(0.88)
+}
+
+enum BugLayout {
+    static let screenPadding: CGFloat = 24
+    static let sectionSpacing: CGFloat = 24
+    static let cardSpacing: CGFloat = 16
+    static let cardRadius: CGFloat = 28
+    static let controlRadius: CGFloat = 20
+    static let minimumTapHeight: CGFloat = 52
+}
+
+struct BugPressButtonStyle: ButtonStyle {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed && !reduceMotion ? 0.975 : 1)
+            .opacity(configuration.isPressed ? 0.88 : 1)
+            .animation(reduceMotion ? nil : .snappy(duration: 0.16), value: configuration.isPressed)
+    }
+}
+
+struct BugCardSurface: ViewModifier {
+    var tint: Color = BugColor.blue
+
+    func body(content: Content) -> some View {
+        content
+            .background(BugColor.surface, in: RoundedRectangle(cornerRadius: BugLayout.cardRadius))
+            .overlay {
+                RoundedRectangle(cornerRadius: BugLayout.cardRadius)
+                    .stroke(.white.opacity(0.72), lineWidth: 1)
+            }
+            .shadow(color: tint.opacity(0.13), radius: 12, y: 6)
+    }
+}
+
+extension View {
+    func bugCard(tint: Color = BugColor.blue) -> some View {
+        modifier(BugCardSurface(tint: tint))
+    }
 }
 
 struct PlayfulBackground: View {
@@ -48,10 +89,12 @@ struct ScreenTitle: View {
                 .foregroundStyle(BugColor.orange)
             Text(title)
                 .font(.system(.largeTitle, design: .rounded, weight: .black))
+                .fixedSize(horizontal: false, vertical: true)
             if let message {
                 Text(message)
-                    .font(.title3.weight(.medium))
+                    .font(.system(.title3, design: .rounded, weight: .medium))
                     .foregroundStyle(BugColor.ink.opacity(0.68))
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
     }
@@ -68,14 +111,14 @@ struct PrimaryButton: View {
                 Text(title)
                 if let icon { Image(systemName: icon) }
             }
-            .font(.title3.bold())
+            .font(.system(.title3, design: .rounded, weight: .bold))
             .frame(maxWidth: .infinity)
             .frame(minHeight: 58)
             .foregroundStyle(.white)
-            .background(BugColor.orange.gradient, in: RoundedRectangle(cornerRadius: 22))
-            .shadow(color: BugColor.orange.opacity(0.3), radius: 8, y: 5)
+            .background(BugColor.orange.gradient, in: RoundedRectangle(cornerRadius: BugLayout.controlRadius))
+            .shadow(color: BugColor.orange.opacity(0.24), radius: 10, y: 5)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(BugPressButtonStyle())
         .accessibilityAddTraits(.isButton)
     }
 }
@@ -91,14 +134,14 @@ struct SecondaryButton: View {
                 if let icon { Image(systemName: icon) }
                 Text(title)
             }
-            .font(.headline)
+            .font(.system(.headline, design: .rounded, weight: .bold))
             .frame(maxWidth: .infinity)
-            .frame(minHeight: 52)
+            .frame(minHeight: BugLayout.minimumTapHeight)
             .foregroundStyle(BugColor.orange)
-            .background(.white.opacity(0.8), in: RoundedRectangle(cornerRadius: 20))
-            .overlay(RoundedRectangle(cornerRadius: 20).stroke(BugColor.orange, lineWidth: 2))
+            .background(BugColor.surface, in: RoundedRectangle(cornerRadius: BugLayout.controlRadius))
+            .overlay(RoundedRectangle(cornerRadius: BugLayout.controlRadius).stroke(BugColor.orange.opacity(0.85), lineWidth: 2))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(BugPressButtonStyle())
     }
 }
 
@@ -110,8 +153,11 @@ struct BackCircleButton: View {
                 .font(.title3.bold())
                 .foregroundStyle(BugColor.ink)
                 .frame(width: 48, height: 48)
-                .background(.white.opacity(0.9), in: Circle())
+                .background(BugColor.surface, in: Circle())
+                .overlay(Circle().stroke(.white.opacity(0.8), lineWidth: 1))
+                .shadow(color: BugColor.ink.opacity(0.08), radius: 7, y: 3)
         }
+        .buttonStyle(BugPressButtonStyle())
         .accessibilityLabel("Back")
     }
 }

@@ -11,15 +11,16 @@ struct CompletionView: View {
         ZStack {
             ConfettiView()
             ScrollView {
-                VStack(spacing: 10) {
+                VStack(spacing: BugLayout.cardSpacing) {
                     HStack {
                         Spacer()
                         Label("Bug Book", systemImage: "book.closed.fill")
-                            .font(.subheadline.bold())
+                            .font(.system(.subheadline, design: .rounded, weight: .bold))
                             .foregroundStyle(BugColor.purple)
                             .padding(.horizontal, 12)
                             .frame(minHeight: 44)
-                            .background(.white.opacity(0.9), in: Capsule())
+                            .background(BugColor.surface, in: Capsule())
+                            .overlay(Capsule().stroke(.white.opacity(0.8), lineWidth: 1))
                     }
 
                     LadybugView(state: .celebrating, size: 148)
@@ -41,7 +42,7 @@ struct CompletionView: View {
                         model.done()
                     }
                 }
-                .padding(24)
+                .padding(BugLayout.screenPadding)
                 .frame(maxWidth: 560)
                 .frame(maxWidth: .infinity)
             }
@@ -61,24 +62,24 @@ struct CompletionView: View {
                     .opacity(stickerFlying ? 0 : 0.9)
             }
             Text("You found \(sticker.name)!")
-                .font(.title3.bold())
+                .font(.system(.title3, design: .rounded, weight: .bold))
                 .multilineTextAlignment(.center)
             if let title = model.currentMission?.title {
                 Text("Mission complete: \(title)")
-                    .font(.subheadline.weight(.semibold))
+                    .font(.system(.subheadline, design: .rounded, weight: .semibold))
                     .foregroundStyle(BugColor.ink.opacity(0.62))
                     .multilineTextAlignment(.center)
             }
             Label("Saved to My Bug Book", systemImage: "checkmark.circle.fill")
-                .font(.subheadline.bold())
+                .font(.system(.subheadline, design: .rounded, weight: .bold))
                 .foregroundStyle(BugColor.green)
             Text(stickerTotalText)
-                .font(.headline)
+                .font(.system(.headline, design: .rounded, weight: .bold))
                 .foregroundStyle(BugColor.ink.opacity(0.68))
         }
         .padding(18)
         .frame(maxWidth: .infinity)
-        .background(.white.opacity(0.94), in: RoundedRectangle(cornerRadius: 26))
+        .bugCard(tint: BugColor.green)
         .padding(.vertical, 6)
         .accessibilityElement(children: .combine)
     }
@@ -113,4 +114,9 @@ struct CompletionView: View {
 #Preview("Completion") {
     let model = AppViewModel.completionPreview()
     CompletionView(model: model)
+}
+
+#Preview("Completion – Larger Text") {
+    CompletionView(model: AppViewModel.completionPreview())
+        .environment(\.dynamicTypeSize, .accessibility1)
 }

@@ -6,7 +6,7 @@ struct LocationView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 22) {
+            VStack(alignment: .leading, spacing: BugLayout.sectionSpacing) {
                 HStack {
                     BackCircleButton { model.goBack() }
                     Spacer()
@@ -17,7 +17,7 @@ struct LocationView: View {
                     title: "Where are you?",
                     message: "Pick your setting and we’ll find the fun."
                 )
-                VStack(spacing: 16) {
+                VStack(spacing: BugLayout.cardSpacing) {
                     ForEach(Array(AdventureLocation.allCases.enumerated()), id: \.element.id) { index, location in
                         Button {
                             model.choose(location)
@@ -37,10 +37,11 @@ struct LocationView: View {
                                 .frame(width: 76, height: 76)
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(location.title)
-                                        .font(.system(.title2, design: .rounded, weight: .bold))
+                                        .font(.system(.title2, design: .rounded, weight: .black))
                                     Text(locationSubtitle(for: location))
-                                        .font(.subheadline.weight(.semibold))
+                                        .font(.system(.subheadline, design: .rounded, weight: .semibold))
                                         .foregroundStyle(.white.opacity(0.85))
+                                        .fixedSize(horizontal: false, vertical: true)
                                 }
                                 Spacer()
                                 Image(systemName: "chevron.right")
@@ -49,14 +50,18 @@ struct LocationView: View {
                             .foregroundStyle(.white)
                             .padding(20)
                             .frame(maxWidth: .infinity, minHeight: 120)
-                            .background(cardColors[index].gradient, in: RoundedRectangle(cornerRadius: 28))
-                            .shadow(color: cardColors[index].opacity(0.25), radius: 7, y: 5)
+                            .background(cardColors[index].gradient, in: RoundedRectangle(cornerRadius: BugLayout.cardRadius))
+                            .overlay {
+                                RoundedRectangle(cornerRadius: BugLayout.cardRadius)
+                                    .stroke(.white.opacity(0.28), lineWidth: 1)
+                            }
+                            .shadow(color: cardColors[index].opacity(0.2), radius: 12, y: 6)
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(BugPressButtonStyle())
                     }
                 }
             }
-            .padding(24)
+            .padding(BugLayout.screenPadding)
             .frame(maxWidth: 600)
             .frame(maxWidth: .infinity)
         }
@@ -84,13 +89,21 @@ struct StickerPill: View {
     var body: some View {
         HStack(spacing: 7) {
             Image(systemName: "ladybug.fill").foregroundStyle(BugColor.red)
-            Text("\(count)").font(.headline)
+            Text("\(count)")
+                .font(.system(.headline, design: .rounded, weight: .bold))
         }
         .padding(.horizontal, 14)
         .frame(minHeight: 44)
-        .background(.white.opacity(0.9), in: Capsule())
+        .background(BugColor.surface, in: Capsule())
+        .overlay(Capsule().stroke(.white.opacity(0.8), lineWidth: 1))
+        .shadow(color: BugColor.ink.opacity(0.07), radius: 6, y: 3)
         .accessibilityLabel("\(count) bug stickers")
     }
 }
 
 #Preview { LocationView(model: AppViewModel()) }
+
+#Preview("Location – Larger Text") {
+    LocationView(model: AppViewModel.preview(stickerCount: 5))
+        .environment(\.dynamicTypeSize, .accessibility1)
+}

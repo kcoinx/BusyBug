@@ -8,7 +8,7 @@ struct BugBookView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading, spacing: BugLayout.sectionSpacing) {
                 HStack {
                     BackCircleButton { model.goBack() }
                     Spacer()
@@ -24,10 +24,17 @@ struct BugBookView: View {
                     title
                 }
 
-                ProgressView(value: Double(model.earnedStickerIDs.count), total: Double(BugSticker.collection.count))
-                    .tint(BugColor.green)
-                    .scaleEffect(x: 1, y: 2, anchor: .center)
+                GeometryReader { proxy in
+                    ZStack(alignment: .leading) {
+                        Capsule().fill(BugColor.green.opacity(0.14))
+                        Capsule()
+                            .fill(BugColor.green.gradient)
+                            .frame(width: proxy.size.width * collectionProgress)
+                    }
+                }
+                    .frame(height: 12)
                     .accessibilityLabel("\(model.earnedStickerIDs.count) of \(BugSticker.collection.count) unique bugs found")
+                    .accessibilityValue("\(Int(collectionProgress * 100)) percent")
 
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(BugSticker.collection) { sticker in
@@ -37,11 +44,15 @@ struct BugBookView: View {
                         )
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 12)
-                        .background(.white.opacity(0.78), in: RoundedRectangle(cornerRadius: 22))
+                        .background(BugColor.surface, in: RoundedRectangle(cornerRadius: 22))
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 22)
+                                .stroke(.white.opacity(0.7), lineWidth: 1)
+                        }
                     }
                 }
             }
-            .padding(24)
+            .padding(BugLayout.screenPadding)
             .frame(maxWidth: 650)
             .frame(maxWidth: .infinity)
         }
@@ -60,8 +71,17 @@ struct BugBookView: View {
         if remaining == 0 { return "You found every bug. Amazing exploring!" }
         return "Complete missions to discover \(remaining) more."
     }
+
+    private var collectionProgress: CGFloat {
+        CGFloat(model.earnedStickerIDs.count) / CGFloat(BugSticker.collection.count)
+    }
 }
 
 #Preview("Bug Book") {
     BugBookView(model: AppViewModel.preview(stickerCount: 5))
+}
+
+#Preview("Bug Book – Larger Text") {
+    BugBookView(model: AppViewModel.preview(stickerCount: 5))
+        .environment(\.dynamicTypeSize, .accessibility1)
 }

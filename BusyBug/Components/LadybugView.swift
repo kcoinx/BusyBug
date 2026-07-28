@@ -80,8 +80,8 @@ struct LadybugView: View {
                 .fill(BugColor.ink.gradient)
                 .frame(width: 76, height: 76)
             HStack(spacing: 10) {
-                eye
-                eye
+                eye(isLeading: true)
+                eye(isLeading: false)
             }
             .offset(y: -4)
             mouth
@@ -90,14 +90,27 @@ struct LadybugView: View {
         .offset(y: -55)
     }
 
-    private var eye: some View {
-        ZStack {
-            Circle().fill(.white).frame(width: 25, height: 29)
-            Circle()
-                .fill(BugColor.ink)
-                .frame(width: 10, height: 12)
-                .offset(x: state == .thinking ? 3 : 0, y: 2)
-            Circle().fill(.white).frame(width: 4, height: 4).offset(x: -2, y: -2)
+    @ViewBuilder
+    private func eye(isLeading: Bool) -> some View {
+        if state == .encouraging && isLeading {
+            Capsule()
+                .fill(.white)
+                .frame(width: 24, height: 6)
+                .rotationEffect(.degrees(-7))
+        } else if state == .celebrating {
+            SmileShape()
+                .stroke(.white, style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                .frame(width: 22, height: 11)
+                .rotationEffect(.degrees(180))
+        } else {
+            ZStack {
+                Circle().fill(.white).frame(width: 25, height: 29)
+                Circle()
+                    .fill(BugColor.ink)
+                    .frame(width: 10, height: 12)
+                    .offset(x: state == .thinking ? 3 : 0, y: 2)
+                Circle().fill(.white).frame(width: 4, height: 4).offset(x: -2, y: -2)
+            }
         }
     }
 
