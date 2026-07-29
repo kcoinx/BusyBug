@@ -32,6 +32,7 @@
 		B00000000000000000000018 /* sticker_earned.wav in Resources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000019 /* sticker_earned.wav */; };
 		B00000000000000000000019 /* celebration.wav in Resources */ = {isa = PBXBuildFile; fileRef = C0000000000000000000001A /* celebration.wav */; };
 		B0000000000000000000001A /* RoadTripSafetyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0000000000000000000001B /* RoadTripSafetyView.swift */; };
+		B0000000000000000000001B /* AgeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0000000000000000000001C /* AgeCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		C00000000000000000000019 /* sticker_earned.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sticker_earned.wav; sourceTree = "<group>"; };
 		C0000000000000000000001A /* celebration.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = celebration.wav; sourceTree = "<group>"; };
 		C0000000000000000000001B /* RoadTripSafetyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoadTripSafetyView.swift; sourceTree = "<group>"; };
+		C0000000000000000000001C /* AgeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,7 +108,7 @@
 			path = Views; sourceTree = "<group>";
 		};
 		E00000000000000000000005 /* ViewModels */ = {isa = PBXGroup; children = (C00000000000000000000003 /* AppViewModel.swift */); path = ViewModels; sourceTree = "<group>"; };
-		E00000000000000000000006 /* Components */ = {isa = PBXGroup; children = (C00000000000000000000004 /* BusyBugTheme.swift */, C00000000000000000000005 /* LadybugView.swift */, C00000000000000000000006 /* ConfettiView.swift */, C00000000000000000000011 /* BugStickerView.swift */); path = Components; sourceTree = "<group>"; };
+		E00000000000000000000006 /* Components */ = {isa = PBXGroup; children = (C00000000000000000000004 /* BusyBugTheme.swift */, C00000000000000000000005 /* LadybugView.swift */, C00000000000000000000006 /* ConfettiView.swift */, C00000000000000000000011 /* BugStickerView.swift */, C0000000000000000000001C /* AgeCard.swift */); path = Components; sourceTree = "<group>"; };
 		E00000000000000000000007 /* Resources */ = {isa = PBXGroup; children = (C0000000000000000000000D /* missions.json */, E0000000000000000000000A /* Sounds */); path = Resources; sourceTree = "<group>"; };
 		E00000000000000000000008 /* Products */ = {isa = PBXGroup; children = (C0000000000000000000000F /* BusyBug.app */); name = Products; sourceTree = "<group>"; };
 		E00000000000000000000009 /* Services */ = {isa = PBXGroup; children = (C00000000000000000000013 /* SoundManager.swift */, C00000000000000000000014 /* HapticsManager.swift */); path = Services; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				B00000000000000000000013 /* HapticsManager.swift in Sources */,
 				B00000000000000000000014 /* ParentSettingsView.swift in Sources */,
 				B0000000000000000000001A /* RoadTripSafetyView.swift in Sources */,
+				B0000000000000000000001B /* AgeCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

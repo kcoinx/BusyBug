@@ -42,13 +42,13 @@ final class AppViewModel: ObservableObject {
     init(
         persistenceEnabled: Bool = true,
         stickerCount: Int? = nil,
-        soundManager: SoundManager = .shared,
-        hapticsManager: HapticsManager = .shared,
+        soundManager: SoundManager? = nil,
+        hapticsManager: HapticsManager? = nil,
         feedbackEnabled: Bool = true
     ) {
         self.persistenceEnabled = persistenceEnabled
-        self.soundManager = soundManager
-        self.hapticsManager = hapticsManager
+        self.soundManager = soundManager ?? .shared
+        self.hapticsManager = hapticsManager ?? .shared
         self.feedbackEnabled = feedbackEnabled
         let savedCount = stickerCount ?? UserDefaults.standard.integer(forKey: "bugStickerCount")
         let savedIDs = persistenceEnabled
