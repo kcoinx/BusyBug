@@ -43,7 +43,11 @@ final class SoundManager: ObservableObject {
     }
 
     func playRewardSequence(discoveredNewBug: Bool) {
-        guard soundsEnabled else { return }
+        guard soundsEnabled else {
+            debugLog("Reward sequence suppressed because Sounds are Off")
+            return
+        }
+        debugLog("Reward sequence requested once; new bug: \(discoveredNewBug)")
         rewardTask?.cancel()
         player?.stop()
         lastPlayTime = .distantPast
@@ -80,24 +84,38 @@ final class SoundManager: ObservableObject {
     }
 
     private func play(_ sound: Sound, minimumInterval: TimeInterval = 0.08) {
-        guard soundsEnabled else { return }
-        let now = Date()
-        guard now.timeIntervalSince(lastPlayTime) >= minimumInterval else { return }
-        guard let url = Bundle.main.url(forResource: sound.rawValue, withExtension: "wav") else {
+        debugLog("Requested \(sound.rawValue)")
+        guard soundsEnabled else {
+            debugLog("Suppressed \(sound.rawValue): Sounds are Off")
             return
         }
+        let now = Date()
+        guard now.timeIntervalSince(lastPlayTime) >= minimumInterval else {
+            debugLog("Debounced \(sound.rawValue)")
+            return
+        }
+        guard let url = Bundle.main.url(forResource: sound.rawValue, withExtension: "wav") else {
+            debugLog("Missing asset: \(sound.rawValue).wav")
+            return
+        }
+        debugLog("Found asset: \(url.lastPathComponent)")
 
         configureAudioSessionIfNeeded()
 
         do {
             player?.stop()
             player = try AVAudioPlayer(contentsOf: url)
-            player?.volume = sound == .buttonTap ? 0.12 : 0.22
+            player?.volume = sound == .buttonTap ? 0.22 : 0.55
             player?.prepareToPlay()
-            player?.play()
-            lastPlayTime = now
+            if player?.play() == true {
+                lastPlayTime = now
+                debugLog("Playing \(sound.rawValue) at volume \(player?.volume ?? 0)")
+            } else {
+                debugLog("AVAudioPlayer declined \(sound.rawValue)")
+            }
         } catch {
             player = nil
+            debugLog("Playback error for \(sound.rawValue): \(error.localizedDescription)")
         }
     }
 
@@ -108,9 +126,17 @@ final class SoundManager: ObservableObject {
             try session.setCategory(.ambient, mode: .default, options: [.mixWithOthers])
             try session.setActive(true)
             audioSessionConfigured = true
+            debugLog("Ambient audio session active; mixes with other audio")
         } catch {
             audioSessionConfigured = false
+            debugLog("Audio session error: \(error.localizedDescription)")
         }
+    }
+
+    private func debugLog(_ message: String) {
+#if DEBUG
+        print("[BusyBug Sound] \(message)")
+#endif
     }
 
     private func pause(milliseconds: UInt64) async {

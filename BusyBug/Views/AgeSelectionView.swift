@@ -5,21 +5,21 @@ struct AgeSelectionView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: BugLayout.sectionSpacing) {
+            VStack(alignment: .leading, spacing: 12) {
                 BackCircleButton { model.goBack() }
                 ScreenTitle(
                     eyebrow: "Step 2 of 2",
-                    title: "How old is your\nlittle explorer?",
+                    title: "How old is your explorer?",
                     message: "We’ll choose missions that match their age."
                 )
-                VStack(spacing: BugLayout.cardSpacing) {
+                VStack(spacing: 10) {
                     ageCard(.younger, color: BugColor.yellow)
                     ageCard(.middle, color: BugColor.purple)
                     ageCard(.older, color: BugColor.blue)
                 }
-                .padding(.top, 12)
             }
-            .padding(BugLayout.screenPadding)
+            .padding(.horizontal, BugLayout.screenPadding)
+            .padding(.vertical, 12)
             .frame(maxWidth: 600)
             .frame(maxWidth: .infinity)
         }
@@ -30,13 +30,13 @@ struct AgeSelectionView: View {
             model.choose(age)
         } label: {
             ViewThatFits(in: .horizontal) {
-                HStack(spacing: 18) {
+                HStack(spacing: 14) {
                     ageBadge(age)
                     ageCopy(age)
                     Spacer()
                     chevron
                 }
-                VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .leading, spacing: 8) {
                     HStack {
                         ageBadge(age)
                         Spacer()
@@ -45,9 +45,10 @@ struct AgeSelectionView: View {
                     ageCopy(age)
                 }
             }
-            .padding(22)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
             .foregroundStyle(age == .younger ? BugColor.ink : .white)
-            .frame(maxWidth: .infinity, minHeight: 150)
+            .frame(maxWidth: .infinity, minHeight: 104)
             .background(color.gradient, in: RoundedRectangle(cornerRadius: BugLayout.cardRadius))
             .overlay {
                 RoundedRectangle(cornerRadius: BugLayout.cardRadius)
@@ -60,15 +61,15 @@ struct AgeSelectionView: View {
 
     private func ageBadge(_ age: AgeBand) -> some View {
         Text(ageRange(age))
-            .font(.system(size: 38, weight: .black, design: .rounded))
-            .frame(width: 94, height: 94)
+            .font(.system(size: 28, weight: .black, design: .rounded))
+            .frame(width: 64, height: 64)
             .background(.white.opacity(0.27), in: Circle())
     }
 
     private func ageCopy(_ age: AgeBand) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: 3) {
             Text(age.title)
-                .font(.system(.title2, design: .rounded, weight: .black))
+                .font(.system(.title3, design: .rounded, weight: .black))
             Text(ageDescription(age))
                 .font(.system(.subheadline, design: .rounded, weight: .semibold))
                 .foregroundStyle(age == .younger ? BugColor.ink.opacity(0.68) : .white.opacity(0.85))
@@ -103,4 +104,14 @@ struct AgeSelectionView: View {
 #Preview("Age – Larger Text") {
     AgeSelectionView(model: AppViewModel.preview())
         .environment(\.dynamicTypeSize, .accessibility1)
+}
+
+#Preview("Age – Compact Height") {
+    AgeSelectionView(model: AppViewModel.preview())
+        .frame(width: 375, height: 667)
+}
+
+#Preview("Age – Pro Height") {
+    AgeSelectionView(model: AppViewModel.preview())
+        .frame(width: 402, height: 874)
 }
