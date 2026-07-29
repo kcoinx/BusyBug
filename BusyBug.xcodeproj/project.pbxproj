@@ -31,6 +31,7 @@
 		B00000000000000000000017 /* bug_discovered.wav in Resources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000018 /* bug_discovered.wav */; };
 		B00000000000000000000018 /* sticker_earned.wav in Resources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000019 /* sticker_earned.wav */; };
 		B00000000000000000000019 /* celebration.wav in Resources */ = {isa = PBXBuildFile; fileRef = C0000000000000000000001A /* celebration.wav */; };
+		B0000000000000000000001A /* RoadTripSafetyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0000000000000000000001B /* RoadTripSafetyView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		C00000000000000000000018 /* bug_discovered.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bug_discovered.wav; sourceTree = "<group>"; };
 		C00000000000000000000019 /* sticker_earned.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sticker_earned.wav; sourceTree = "<group>"; };
 		C0000000000000000000001A /* celebration.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = celebration.wav; sourceTree = "<group>"; };
+		C0000000000000000000001B /* RoadTripSafetyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoadTripSafetyView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 				C0000000000000000000000C /* CompletionView.swift */,
 				C00000000000000000000012 /* BugBookView.swift */,
 				C00000000000000000000015 /* ParentSettingsView.swift */,
+				C0000000000000000000001B /* RoadTripSafetyView.swift */,
 			);
 			path = Views; sourceTree = "<group>";
 		};
@@ -168,6 +171,7 @@
 				B00000000000000000000012 /* SoundManager.swift in Sources */,
 				B00000000000000000000013 /* HapticsManager.swift in Sources */,
 				B00000000000000000000014 /* ParentSettingsView.swift in Sources */,
+				B0000000000000000000001A /* RoadTripSafetyView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

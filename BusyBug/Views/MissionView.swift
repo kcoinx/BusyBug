@@ -8,7 +8,6 @@ struct MissionView: View {
         ScrollView {
             VStack(spacing: BugLayout.cardSpacing) {
                 header
-                parentBanner
                 if let mission = model.currentMission {
                     contextRow
                     missionCard(mission)
@@ -74,16 +73,6 @@ struct MissionView: View {
         .foregroundStyle(BugColor.ink.opacity(0.62))
     }
 
-    private var parentBanner: some View {
-        Label("Parent: Read this to your child", systemImage: "person.crop.circle.fill")
-            .font(.system(.subheadline, design: .rounded, weight: .bold))
-            .foregroundStyle(BugColor.ink)
-            .frame(maxWidth: .infinity)
-            .padding(13)
-            .background(BugColor.yellow.opacity(0.7), in: RoundedRectangle(cornerRadius: 16))
-            .overlay(RoundedRectangle(cornerRadius: 16).stroke(.white.opacity(0.6), lineWidth: 1))
-    }
-
     private func missionCard(_ mission: Mission) -> some View {
         VStack(spacing: 16) {
             Text(mission.category.uppercased())
@@ -109,6 +98,9 @@ struct MissionView: View {
                 .multilineTextAlignment(.center)
                 .lineSpacing(5)
                 .fixedSize(horizontal: false, vertical: true)
+            Label("About \(mission.durationMinutes) min", systemImage: "clock.fill")
+                .font(.system(.subheadline, design: .rounded, weight: .bold))
+                .foregroundStyle(BugColor.ink.opacity(0.55))
         }
         .padding(24)
         .frame(maxWidth: .infinity, minHeight: 300)
@@ -149,13 +141,19 @@ struct MissionView: View {
             model.showNewMission()
         }
         PrimaryButton(
-            title: "We Did It!",
+            title: model.currentMission?.completionLabel ?? "I Did It!",
             icon: "checkmark",
             playsTapSound: false,
-            playsHaptic: false
+            playsHaptic: false,
+            isEnabled: model.canCompleteCurrentMission
         ) {
             model.completeMission()
         }
+        .accessibilityHint(
+            model.canCompleteCurrentMission
+                ? "Completes this mission"
+                : "Choose an answer first"
+        )
     }
 
     private var timeText: String {

@@ -14,7 +14,8 @@ struct AgeSelectionView: View {
                 )
                 VStack(spacing: BugLayout.cardSpacing) {
                     ageCard(.younger, color: BugColor.yellow)
-                    ageCard(.older, color: BugColor.purple)
+                    ageCard(.middle, color: BugColor.purple)
+                    ageCard(.older, color: BugColor.blue)
                 }
                 .padding(.top, 12)
             }
@@ -24,7 +25,7 @@ struct AgeSelectionView: View {
         }
     }
 
-    private func ageCard(_ age: AgeGroup, color: Color) -> some View {
+    private func ageCard(_ age: AgeBand, color: Color) -> some View {
         Button {
             model.choose(age)
         } label: {
@@ -57,21 +58,37 @@ struct AgeSelectionView: View {
         .buttonStyle(BugPressButtonStyle())
     }
 
-    private func ageBadge(_ age: AgeGroup) -> some View {
-        Text(age == .younger ? "3–4" : "5–6")
+    private func ageBadge(_ age: AgeBand) -> some View {
+        Text(ageRange(age))
             .font(.system(size: 38, weight: .black, design: .rounded))
             .frame(width: 94, height: 94)
             .background(.white.opacity(0.27), in: Circle())
     }
 
-    private func ageCopy(_ age: AgeGroup) -> some View {
+    private func ageCopy(_ age: AgeBand) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(age.title)
                 .font(.system(.title2, design: .rounded, weight: .black))
-            Text(age == .younger ? "Look, match & count" : "Read, remember & discover")
+            Text(ageDescription(age))
                 .font(.system(.subheadline, design: .rounded, weight: .semibold))
                 .foregroundStyle(age == .younger ? BugColor.ink.opacity(0.68) : .white.opacity(0.85))
                 .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    private func ageRange(_ age: AgeBand) -> String {
+        switch age {
+        case .younger: return "3–4"
+        case .middle: return "5–6"
+        case .older: return "7–8"
+        }
+    }
+
+    private func ageDescription(_ age: AgeBand) -> String {
+        switch age {
+        case .younger: return "Look, match & count"
+        case .middle: return "Read, remember & discover"
+        case .older: return "Solve, imagine & explore"
         }
     }
 

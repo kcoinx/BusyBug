@@ -4,12 +4,12 @@ import Combine
 @MainActor
 final class AppViewModel: ObservableObject {
     enum Route: Equatable {
-        case welcome, bugBook, location, age, mission, completion
+        case welcome, bugBook, location, roadTripSafety, age, mission, completion
     }
 
     @Published var route: Route = .welcome
     @Published var location: AdventureLocation?
-    @Published var ageGroup: AgeGroup?
+    @Published var ageBand: AgeBand?
     @Published var currentMission: Mission?
     @Published var selectedChoice: String?
     @Published var stickers: Int {
@@ -79,23 +79,27 @@ final class AppViewModel: ObservableObject {
     func choose(_ newLocation: AdventureLocation) {
         if feedbackEnabled { soundManager.playButtonTap() }
         location = newLocation
+        route = newLocation == .roadTrip ? .roadTripSafety : .age
+    }
+
+    func continueFromRoadTripSafety() {
         route = .age
     }
 
-    func choose(_ newAgeGroup: AgeGroup) {
+    func choose(_ newAgeBand: AgeBand) {
         if feedbackEnabled {
             soundManager.playButtonTap()
             hapticsManager.importantTap()
         }
-        ageGroup = newAgeGroup
+        ageBand = newAgeBand
         resetTimerState()
         showNewMission()
         route = .mission
     }
 
     func showNewMission() {
-        guard let location, let ageGroup else { return }
-        let matching = missions.filter { $0.location == location && $0.ageGroup == ageGroup }
+        guard let location, let ageBand else { return }
+        let matching = missions.filter { $0.location == location && $0.ageBand == ageBand }
         var available = matching.filter { !recentMissionIDs.contains($0.id) }
         if available.isEmpty {
             recentMissionIDs.removeAll()
@@ -135,9 +139,9 @@ final class AppViewModel: ObservableObject {
         if feedbackEnabled { soundManager.stopAll() }
         stopTimer()
         resetTimerState()
-        route = .location
+        route = .welcome
         location = nil
-        ageGroup = nil
+        ageBand = nil
     }
 
     func goBack() {
@@ -145,6 +149,8 @@ final class AppViewModel: ObservableObject {
         case .bugBook:
             route = bugBookReturnRoute
         case .age:
+            route = location == .roadTrip ? .roadTripSafety : .location
+        case .roadTripSafety:
             route = .location
         case .mission:
             stopTimer()
@@ -171,6 +177,11 @@ final class AppViewModel: ObservableObject {
         stopTimer()
         secondsRemaining = 15 * 60
         timerHasStarted = false
+    }
+
+    var canCompleteCurrentMission: Bool {
+        guard let currentMission else { return false }
+        return !currentMission.requiresChoice || selectedChoice != nil
     }
 
     private func startTimer() {

@@ -105,10 +105,12 @@ struct PrimaryButton: View {
     var icon: String?
     var playsTapSound = true
     var playsHaptic = true
+    var isEnabled = true
     let action: () -> Void
 
     var body: some View {
         Button {
+            guard isEnabled else { return }
             if playsTapSound { SoundManager.shared.playButtonTap() }
             if playsHaptic { HapticsManager.shared.importantTap() }
             action()
@@ -125,6 +127,8 @@ struct PrimaryButton: View {
             .shadow(color: BugColor.orange.opacity(0.24), radius: 10, y: 5)
         }
         .buttonStyle(BugPressButtonStyle())
+        .disabled(!isEnabled)
+        .opacity(isEnabled ? 1 : 0.48)
         .accessibilityAddTraits(.isButton)
     }
 }

@@ -35,16 +35,27 @@ struct BugStickerView: View {
             .shadow(color: isEarned ? colors[sticker.colorIndex].opacity(0.22) : .clear, radius: 7, y: 4)
 
             if showName {
-                Text(isEarned ? sticker.name : "Mystery Bug")
-                    .font(.system(.caption, design: .rounded, weight: .bold))
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(isEarned ? BugColor.ink : BugColor.ink.opacity(0.45))
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.8)
-                    .fixedSize(horizontal: false, vertical: true)
+                VStack(spacing: 2) {
+                    Text(isEarned ? sticker.name : "Mystery Bug")
+                        .font(.system(.caption, design: .rounded, weight: .bold))
+                    if isEarned {
+                        Text(sticker.personality)
+                            .font(.caption2)
+                            .foregroundStyle(BugColor.ink.opacity(0.6))
+                    }
+                }
+                .multilineTextAlignment(.center)
+                .foregroundStyle(isEarned ? BugColor.ink : BugColor.ink.opacity(0.45))
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
+                .fixedSize(horizontal: false, vertical: true)
             }
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(isEarned ? "\(sticker.name), earned" : "Locked mystery bug")
+        .accessibilityLabel(
+            isEarned
+                ? "\(sticker.name), \(sticker.personality). \(sticker.fact). \(sticker.habitatGroup)."
+                : "Locked mystery bug"
+        )
     }
 }

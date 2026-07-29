@@ -44,7 +44,7 @@ struct CompletionView: View {
                     PrimaryButton(title: "Next Mission", icon: "arrow.right") {
                         model.nextMission()
                     }
-                    SecondaryButton(title: "Choose a Place", icon: "mappin.and.ellipse") {
+                    SecondaryButton(title: "Home", icon: "house.fill") {
                         model.done()
                     }
                 }
@@ -69,6 +69,13 @@ struct CompletionView: View {
             }
             Text("You found \(sticker.name)!")
                 .font(.system(.title3, design: .rounded, weight: .bold))
+                .multilineTextAlignment(.center)
+            Text(sticker.personality)
+                .font(.system(.subheadline, design: .rounded, weight: .bold))
+                .foregroundStyle(BugColor.purple)
+            Text(sticker.fact)
+                .font(.system(.subheadline, design: .rounded, weight: .medium))
+                .foregroundStyle(BugColor.ink.opacity(0.68))
                 .multilineTextAlignment(.center)
             if let title = model.currentMission?.title {
                 Text("Mission complete: \(title)")

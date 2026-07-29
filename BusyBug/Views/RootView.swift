@@ -12,6 +12,7 @@ struct RootView: View {
                 case .welcome: WelcomeView(model: model)
                 case .bugBook: BugBookView(model: model)
                 case .location: LocationView(model: model)
+                case .roadTripSafety: RoadTripSafetyView(model: model)
                 case .age: AgeSelectionView(model: model)
                 case .mission: MissionView(model: model)
                 case .completion: CompletionView(model: model)
