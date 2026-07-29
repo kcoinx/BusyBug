@@ -23,6 +23,14 @@
 		B0000000000000000000000F /* BugSticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000010 /* BugSticker.swift */; };
 		B00000000000000000000010 /* BugStickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000011 /* BugStickerView.swift */; };
 		B00000000000000000000011 /* BugBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000012 /* BugBookView.swift */; };
+		B00000000000000000000012 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000013 /* SoundManager.swift */; };
+		B00000000000000000000013 /* HapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000014 /* HapticsManager.swift */; };
+		B00000000000000000000014 /* ParentSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000015 /* ParentSettingsView.swift */; };
+		B00000000000000000000015 /* button_tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000016 /* button_tap.wav */; };
+		B00000000000000000000016 /* mission_complete.wav in Resources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000017 /* mission_complete.wav */; };
+		B00000000000000000000017 /* bug_discovered.wav in Resources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000018 /* bug_discovered.wav */; };
+		B00000000000000000000018 /* sticker_earned.wav in Resources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000019 /* sticker_earned.wav */; };
+		B00000000000000000000019 /* celebration.wav in Resources */ = {isa = PBXBuildFile; fileRef = C0000000000000000000001A /* celebration.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +52,14 @@
 		C00000000000000000000010 /* BugSticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugSticker.swift; sourceTree = "<group>"; };
 		C00000000000000000000011 /* BugStickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugStickerView.swift; sourceTree = "<group>"; };
 		C00000000000000000000012 /* BugBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugBookView.swift; sourceTree = "<group>"; };
+		C00000000000000000000013 /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
+		C00000000000000000000014 /* HapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
+		C00000000000000000000015 /* ParentSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentSettingsView.swift; sourceTree = "<group>"; };
+		C00000000000000000000016 /* button_tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = button_tap.wav; sourceTree = "<group>"; };
+		C00000000000000000000017 /* mission_complete.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = mission_complete.wav; sourceTree = "<group>"; };
+		C00000000000000000000018 /* bug_discovered.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bug_discovered.wav; sourceTree = "<group>"; };
+		C00000000000000000000019 /* sticker_earned.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sticker_earned.wav; sourceTree = "<group>"; };
+		C0000000000000000000001A /* celebration.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = celebration.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +80,7 @@
 				E00000000000000000000004 /* Views */,
 				E00000000000000000000005 /* ViewModels */,
 				E00000000000000000000006 /* Components */,
+				E00000000000000000000009 /* Services */,
 				E00000000000000000000007 /* Resources */,
 				C0000000000000000000000E /* Assets.xcassets */,
 			);
@@ -81,13 +98,16 @@
 				C0000000000000000000000B /* MissionView.swift */,
 				C0000000000000000000000C /* CompletionView.swift */,
 				C00000000000000000000012 /* BugBookView.swift */,
+				C00000000000000000000015 /* ParentSettingsView.swift */,
 			);
 			path = Views; sourceTree = "<group>";
 		};
 		E00000000000000000000005 /* ViewModels */ = {isa = PBXGroup; children = (C00000000000000000000003 /* AppViewModel.swift */); path = ViewModels; sourceTree = "<group>"; };
 		E00000000000000000000006 /* Components */ = {isa = PBXGroup; children = (C00000000000000000000004 /* BusyBugTheme.swift */, C00000000000000000000005 /* LadybugView.swift */, C00000000000000000000006 /* ConfettiView.swift */, C00000000000000000000011 /* BugStickerView.swift */); path = Components; sourceTree = "<group>"; };
-		E00000000000000000000007 /* Resources */ = {isa = PBXGroup; children = (C0000000000000000000000D /* missions.json */); path = Resources; sourceTree = "<group>"; };
+		E00000000000000000000007 /* Resources */ = {isa = PBXGroup; children = (C0000000000000000000000D /* missions.json */, E0000000000000000000000A /* Sounds */); path = Resources; sourceTree = "<group>"; };
 		E00000000000000000000008 /* Products */ = {isa = PBXGroup; children = (C0000000000000000000000F /* BusyBug.app */); name = Products; sourceTree = "<group>"; };
+		E00000000000000000000009 /* Services */ = {isa = PBXGroup; children = (C00000000000000000000013 /* SoundManager.swift */, C00000000000000000000014 /* HapticsManager.swift */); path = Services; sourceTree = "<group>"; };
+		E0000000000000000000000A /* Sounds */ = {isa = PBXGroup; children = (C00000000000000000000016 /* button_tap.wav */, C00000000000000000000017 /* mission_complete.wav */, C00000000000000000000018 /* bug_discovered.wav */, C00000000000000000000019 /* sticker_earned.wav */, C0000000000000000000001A /* celebration.wav */); path = Sounds; sourceTree = "<group>"; };
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -122,7 +142,7 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		D00000000000000000000003 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (B0000000000000000000000D /* missions.json in Resources */, B0000000000000000000000E /* Assets.xcassets in Resources */); runOnlyForDeploymentPostprocessing = 0; };
+		D00000000000000000000003 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (B0000000000000000000000D /* missions.json in Resources */, B0000000000000000000000E /* Assets.xcassets in Resources */, B00000000000000000000015 /* button_tap.wav in Resources */, B00000000000000000000016 /* mission_complete.wav in Resources */, B00000000000000000000017 /* bug_discovered.wav in Resources */, B00000000000000000000018 /* sticker_earned.wav in Resources */, B00000000000000000000019 /* celebration.wav in Resources */); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -145,6 +165,9 @@
 				B0000000000000000000000F /* BugSticker.swift in Sources */,
 				B00000000000000000000010 /* BugStickerView.swift in Sources */,
 				B00000000000000000000011 /* BugBookView.swift in Sources */,
+				B00000000000000000000012 /* SoundManager.swift in Sources */,
+				B00000000000000000000013 /* HapticsManager.swift in Sources */,
+				B00000000000000000000014 /* ParentSettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

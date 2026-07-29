@@ -2,10 +2,30 @@ import SwiftUI
 
 struct WelcomeView: View {
     @ObservedObject var model: AppViewModel
+    @ObservedObject private var soundManager = SoundManager.shared
+    @State private var showsParentSettings = false
 
     var body: some View {
         ScrollView {
             VStack(spacing: BugLayout.sectionSpacing) {
+                HStack {
+                    Spacer()
+                    Button {
+                        soundManager.playButtonTap()
+                        HapticsManager.shared.importantTap()
+                        showsParentSettings = true
+                    } label: {
+                        Label("Parent Settings", systemImage: "gearshape.fill")
+                            .font(.system(.subheadline, design: .rounded, weight: .bold))
+                            .foregroundStyle(BugColor.purple)
+                            .padding(.horizontal, 12)
+                            .frame(minHeight: 44)
+                            .background(BugColor.surface, in: Capsule())
+                            .overlay(Capsule().stroke(.white.opacity(0.8), lineWidth: 1))
+                    }
+                    .buttonStyle(BugPressButtonStyle())
+                    .accessibilityHint("Opens sound settings")
+                }
                 Spacer(minLength: 24)
                 LadybugView(state: .welcome)
                 VStack(spacing: 8) {
@@ -75,6 +95,11 @@ struct WelcomeView: View {
             .frame(maxWidth: 560)
             .frame(minHeight: 720)
             .frame(maxWidth: .infinity)
+        }
+        .sheet(isPresented: $showsParentSettings) {
+            ParentSettingsView(soundManager: soundManager)
+                .presentationDetents([.medium])
+                .presentationDragIndicator(.visible)
         }
     }
 

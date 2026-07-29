@@ -103,10 +103,16 @@ struct ScreenTitle: View {
 struct PrimaryButton: View {
     let title: String
     var icon: String?
+    var playsTapSound = true
+    var playsHaptic = true
     let action: () -> Void
 
     var body: some View {
-        Button(action: action) {
+        Button {
+            if playsTapSound { SoundManager.shared.playButtonTap() }
+            if playsHaptic { HapticsManager.shared.importantTap() }
+            action()
+        } label: {
             HStack(spacing: 10) {
                 Text(title)
                 if let icon { Image(systemName: icon) }
@@ -129,7 +135,10 @@ struct SecondaryButton: View {
     let action: () -> Void
 
     var body: some View {
-        Button(action: action) {
+        Button {
+            SoundManager.shared.playButtonTap()
+            action()
+        } label: {
             HStack {
                 if let icon { Image(systemName: icon) }
                 Text(title)
@@ -148,7 +157,11 @@ struct SecondaryButton: View {
 struct BackCircleButton: View {
     let action: () -> Void
     var body: some View {
-        Button(action: action) {
+        Button {
+            SoundManager.shared.playButtonTap()
+            HapticsManager.shared.importantTap()
+            action()
+        } label: {
             Image(systemName: "chevron.left")
                 .font(.title3.bold())
                 .foregroundStyle(BugColor.ink)

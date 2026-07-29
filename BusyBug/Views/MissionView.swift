@@ -148,7 +148,12 @@ struct MissionView: View {
         SecondaryButton(title: "New One", icon: "arrow.triangle.2.circlepath") {
             model.showNewMission()
         }
-        PrimaryButton(title: "We Did It!", icon: "checkmark") {
+        PrimaryButton(
+            title: "We Did It!",
+            icon: "checkmark",
+            playsTapSound: false,
+            playsHaptic: false
+        ) {
             model.completeMission()
         }
     }

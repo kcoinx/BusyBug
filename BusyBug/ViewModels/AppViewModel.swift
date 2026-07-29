@@ -35,9 +35,21 @@ final class AppViewModel: ObservableObject {
     private var currentMissionAwarded = false
     private let persistenceEnabled: Bool
     private var bugBookReturnRoute: Route = .welcome
+    private let soundManager: SoundManager
+    private let hapticsManager: HapticsManager
+    private let feedbackEnabled: Bool
 
-    init(persistenceEnabled: Bool = true, stickerCount: Int? = nil) {
+    init(
+        persistenceEnabled: Bool = true,
+        stickerCount: Int? = nil,
+        soundManager: SoundManager = .shared,
+        hapticsManager: HapticsManager = .shared,
+        feedbackEnabled: Bool = true
+    ) {
         self.persistenceEnabled = persistenceEnabled
+        self.soundManager = soundManager
+        self.hapticsManager = hapticsManager
+        self.feedbackEnabled = feedbackEnabled
         let savedCount = stickerCount ?? UserDefaults.standard.integer(forKey: "bugStickerCount")
         let savedIDs = persistenceEnabled
             ? Set(UserDefaults.standard.stringArray(forKey: "earnedBugStickerIDs") ?? [])
@@ -55,16 +67,26 @@ final class AppViewModel: ObservableObject {
     func begin() { route = .location }
     func showBugBook() {
         guard route != .bugBook else { return }
+        if feedbackEnabled {
+            if route == .completion { soundManager.stopAll() }
+            soundManager.playButtonTap()
+            hapticsManager.importantTap()
+        }
         bugBookReturnRoute = route
         route = .bugBook
     }
 
     func choose(_ newLocation: AdventureLocation) {
+        if feedbackEnabled { soundManager.playButtonTap() }
         location = newLocation
         route = .age
     }
 
     func choose(_ newAgeGroup: AgeGroup) {
+        if feedbackEnabled {
+            soundManager.playButtonTap()
+            hapticsManager.importantTap()
+        }
         ageGroup = newAgeGroup
         resetTimerState()
         showNewMission()
@@ -92,19 +114,25 @@ final class AppViewModel: ObservableObject {
     func completeMission() {
         guard !currentMissionAwarded else { return }
         currentMissionAwarded = true
-        awardSticker()
+        let discoveredNewBug = awardSticker()
         stickers += 1
         stopTimer()
+        if feedbackEnabled {
+            soundManager.playRewardSequence(discoveredNewBug: discoveredNewBug)
+            hapticsManager.playRewardSequence(discoveredNewBug: discoveredNewBug)
+        }
         route = .completion
     }
 
     func nextMission() {
+        if feedbackEnabled { soundManager.stopAll() }
         showNewMission()
         resetTimer()
         route = .mission
     }
 
     func done() {
+        if feedbackEnabled { soundManager.stopAll() }
         stopTimer()
         resetTimerState()
         route = .location
@@ -179,17 +207,23 @@ final class AppViewModel: ObservableObject {
         missions = decoded
     }
 
-    private func awardSticker() {
+    private func awardSticker() -> Bool {
         if let next = BugSticker.collection.first(where: { !earnedStickerIDs.contains($0.id) }) {
             awardedSticker = next
             earnedStickerIDs.insert(next.id)
+            return true
         } else if !BugSticker.collection.isEmpty {
             awardedSticker = BugSticker.collection[stickers % BugSticker.collection.count]
         }
+        return false
     }
 
     static func preview(stickerCount: Int = 0) -> AppViewModel {
-        AppViewModel(persistenceEnabled: false, stickerCount: stickerCount)
+        AppViewModel(
+            persistenceEnabled: false,
+            stickerCount: stickerCount,
+            feedbackEnabled: false
+        )
     }
 
     static func missionPreview() -> AppViewModel {
